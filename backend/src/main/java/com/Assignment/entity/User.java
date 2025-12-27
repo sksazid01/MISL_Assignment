@@ -17,10 +17,15 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "users", uniqueConstraints = {
-    @UniqueConstraint(columnNames = "username"),
-    @UniqueConstraint(columnNames = "email")
-})
+@Table(
+    name = "users", 
+    uniqueConstraints = 
+        {
+            @UniqueConstraint(columnNames = "username"),
+            @UniqueConstraint(columnNames = "email")
+        }
+)
+
 @Data
 @Builder
 @NoArgsConstructor
