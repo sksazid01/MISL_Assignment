@@ -40,4 +40,8 @@ public interface LeaveRepository extends JpaRepository<Leave, Long> {
         @Param("department") String department,
         @Param("status") LeaveStatus status
     );
+    
+    Long countByStatus(LeaveStatus status);
+    
+    List<Leave> findTop5ByOrderByAppliedDateDesc();
 }

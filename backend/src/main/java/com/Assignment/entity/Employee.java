@@ -24,12 +24,6 @@ public class Employee {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
-
-    @Column(nullable = false, unique = true)
-    private String email;
-
-    @Column(nullable = false)
     private String department;
 
     private String designation;
@@ -48,11 +42,11 @@ public class Employee {
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Leave> leaves;
 
-    // Link to User entity for authentication (optional)
-    @OneToOne
-    @JoinColumn(name = "user_id", unique = true)
+    // Link to User entity for authentication (required)
+    @OneToOne(optional = false)
+    @JoinColumn(name = "user_id", unique = true, nullable = false)
     private User user;
 }

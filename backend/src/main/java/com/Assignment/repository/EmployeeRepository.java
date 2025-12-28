@@ -10,10 +10,6 @@ import java.util.Optional;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     
-    Optional<Employee> findByEmail(String email);
-    
-    Boolean existsByEmail(String email);
-    
     List<Employee> findByDepartment(String department);
     
     List<Employee> findByIsActive(Boolean isActive);
@@ -21,4 +17,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     List<Employee> findByDepartmentAndIsActive(String department, Boolean isActive);
     
     Optional<Employee> findByUserId(Long userId);
+    
+    Long countByIsActive(Boolean isActive);
 }

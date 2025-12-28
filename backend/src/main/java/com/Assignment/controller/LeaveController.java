@@ -225,7 +225,7 @@ public class LeaveController {
         return LeaveResponse.builder()
                 .id(leave.getId())
                 .employeeId(leave.getEmployee().getId())
-                .employeeName(leave.getEmployee().getName())
+                .employeeName(leave.getEmployee().getUser().getUsername())
                 .department(leave.getEmployee().getDepartment())
                 .leaveType(leave.getLeaveType())
                 .startDate(leave.getStartDate())

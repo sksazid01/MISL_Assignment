@@ -5,7 +5,6 @@ import com.Assignment.entity.Role;
 import com.Assignment.entity.User;
 import com.Assignment.repository.UserRepository;
 import com.Assignment.security.JwtUtil;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +17,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseCookie;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -29,6 +32,17 @@ public class AuthController {
     private final JwtUtil jwtUtil;
 
     private final UserRepository userRepository;
+
+    private void addCookie(HttpServletResponse response, String name, String value, int maxAge) {
+        ResponseCookie cookie = ResponseCookie.from(name, value)
+                .httpOnly(true)
+                .secure(false) // Set to true in production with HTTPS
+                .path("/")
+                .maxAge(maxAge)
+                .sameSite("Lax")
+                .build();
+        response.addHeader("Set-Cookie", cookie.toString());
+    }
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
@@ -73,20 +87,9 @@ public class AuthController {
             String accessToken = jwtUtil.generateToken(userDetails);
             String refreshToken = jwtUtil.generateRefreshToken(userDetails);
 
-            // Store tokens in httpOnly cookies
-            Cookie accessTokenCookie = new Cookie("accessToken", accessToken);
-            accessTokenCookie.setHttpOnly(true);
-            accessTokenCookie.setSecure(false); 
-            accessTokenCookie.setPath("/");
-            accessTokenCookie.setMaxAge((int) (jwtUtil.getExpiration() / 1000)); // Convert ms to seconds
-            response.addCookie(accessTokenCookie);
-
-            Cookie refreshTokenCookie = new Cookie("refreshToken", refreshToken);
-            refreshTokenCookie.setHttpOnly(true);
-            refreshTokenCookie.setSecure(false);
-            refreshTokenCookie.setPath("/");
-            refreshTokenCookie.setMaxAge((int) (jwtUtil.getRefreshExpiration() / 1000)); // Convert ms to seconds
-            response.addCookie(refreshTokenCookie);
+            // Store tokens in httpOnly cookies with SameSite
+            addCookie(response, "accessToken", accessToken, (int) (jwtUtil.getExpiration() / 1000));
+            addCookie(response, "refreshToken", refreshToken, (int) (jwtUtil.getRefreshExpiration() / 1000));
 
             User user = userRepository.findByUsername(userDetails.getUsername())
                     .orElseThrow(() -> new RuntimeException("User not found"));
@@ -125,20 +128,9 @@ public class AuthController {
                 String newAccessToken = jwtUtil.generateToken(user);
                 String newRefreshToken = jwtUtil.generateRefreshToken(user);
 
-                // Store new tokens in httpOnly cookies
-                Cookie accessTokenCookie = new Cookie("accessToken", newAccessToken);
-                accessTokenCookie.setHttpOnly(true);
-                accessTokenCookie.setSecure(false); // Set to true in production with HTTPS
-                accessTokenCookie.setPath("/");
-                accessTokenCookie.setMaxAge((int) (jwtUtil.getExpiration() / 1000)); // Convert ms to seconds
-                response.addCookie(accessTokenCookie);
-
-                Cookie refreshTokenCookie = new Cookie("refreshToken", newRefreshToken);
-                refreshTokenCookie.setHttpOnly(true);
-                refreshTokenCookie.setSecure(false); // Set to true in production with HTTPS
-                refreshTokenCookie.setPath("/");
-                refreshTokenCookie.setMaxAge((int) (jwtUtil.getRefreshExpiration() / 1000)); // Convert ms to seconds
-                response.addCookie(refreshTokenCookie);
+                // Store new tokens in httpOnly cookies with SameSite
+                addCookie(response, "accessToken", newAccessToken, (int) (jwtUtil.getExpiration() / 1000));
+                addCookie(response, "refreshToken", newRefreshToken, (int) (jwtUtil.getRefreshExpiration() / 1000));
 
                 AuthResponse authResponse = AuthResponse.builder()
                         .id(user.getId())
@@ -180,20 +172,39 @@ public class AuthController {
     @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletResponse response) {
         // Clear cookies by setting maxAge to 0
-        Cookie accessTokenCookie = new Cookie("accessToken", null);
-        accessTokenCookie.setHttpOnly(true);
-        accessTokenCookie.setSecure(false); // Set to true in production with HTTPS
-        accessTokenCookie.setPath("/");
-        accessTokenCookie.setMaxAge(0);
-        response.addCookie(accessTokenCookie);
-
-        Cookie refreshTokenCookie = new Cookie("refreshToken", null);
-        refreshTokenCookie.setHttpOnly(true);
-        refreshTokenCookie.setSecure(false); // Set to true in production with HTTPS
-        refreshTokenCookie.setPath("/");
-        refreshTokenCookie.setMaxAge(0);
-        response.addCookie(refreshTokenCookie);
+        addCookie(response, "accessToken", "", 0);
+        addCookie(response, "refreshToken", "", 0);
 
         return ResponseEntity.ok(new MessageResponse("Logged out successfully!"));
+    }
+
+    @GetMapping("/users")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        List<UserResponse> userResponses = users.stream()
+                .map(user -> new UserResponse(
+                    user.getId(),
+                    user.getUsername(),
+                    user.getEmail(),
+                    user.getRole().name()
+                ))
+                .collect(java.util.stream.Collectors.toList());
+        return ResponseEntity.ok(userResponses);
+    }
+}
+
+// Simple DTO for user list response
+class UserResponse {
+    public Long id;
+    public String username;
+    public String email;
+    public String role;
+
+    public UserResponse(Long id, String username, String email, String role) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.role = role;
     }
 }

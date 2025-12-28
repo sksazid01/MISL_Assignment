@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -63,29 +65,25 @@ public class EmployeeController {
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createEmployee(@Valid @RequestBody EmployeeRequest request) {
-        // Check if email already exists
-        if (employeeRepository.existsByEmail(request.getEmail())) {
+        // Validate that user exists
+        User user = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + request.getUserId()));
+        
+        // Check if user is already linked to an employee
+        if (employeeRepository.findByUserId(user.getId()).isPresent()) {
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
-                    .body(new MessageResponse("Error: Email is already in use!"));
+                    .body(new MessageResponse("Error: User is already linked to an employee!"));
         }
 
         Employee employee = Employee.builder()
-                .name(request.getName())
-                .email(request.getEmail())
+                .user(user)
                 .department(request.getDepartment())
                 .designation(request.getDesignation())
                 .phoneNumber(request.getPhoneNumber())
                 .joinDate(request.getJoinDate())
                 .isActive(true)
                 .build();
-
-        // Link to User if userId provided
-        if (request.getUserId() != null) {
-            User user = userRepository.findById(request.getUserId())
-                    .orElseThrow(() -> new RuntimeException("User not found with id: " + request.getUserId()));
-            employee.setUser(user);
-        }
 
         Employee savedEmployee = employeeRepository.save(employee);
         return ResponseEntity
@@ -99,27 +97,14 @@ public class EmployeeController {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Employee not found with id: " + id));
 
-        // Check if email is being changed and if it already exists
-        if (!employee.getEmail().equals(request.getEmail()) && 
-            employeeRepository.existsByEmail(request.getEmail())) {
-            return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body(new MessageResponse("Error: Email is already in use!"));
-        }
-
-        employee.setName(request.getName());
-        employee.setEmail(request.getEmail());
+        // Update only non-user fields
         employee.setDepartment(request.getDepartment());
         employee.setDesignation(request.getDesignation());
         employee.setPhoneNumber(request.getPhoneNumber());
         employee.setJoinDate(request.getJoinDate());
 
-        // Update User link if provided
-        if (request.getUserId() != null) {
-            User user = userRepository.findById(request.getUserId())
-                    .orElseThrow(() -> new RuntimeException("User not found with id: " + request.getUserId()));
-            employee.setUser(user);
-        }
+        // Note: User cannot be changed after employee creation
+        // If you need to change the linked user, delete and recreate the employee
 
         Employee updatedEmployee = employeeRepository.save(employee);
         return ResponseEntity.ok(mapToResponse(updatedEmployee));
@@ -159,12 +144,32 @@ public class EmployeeController {
         return ResponseEntity.ok(new MessageResponse("Employee deleted successfully!"));
     }
 
+    @GetMapping("/me")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    public ResponseEntity<?> getMyEmployee() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        
+        Employee employee = employeeRepository.findByUserId(user.getId())
+                .orElse(null);
+        
+        if (employee == null) {
+            return ResponseEntity.ok(new MessageResponse("No employee record linked to this user"));
+        }
+        
+        return ResponseEntity.ok(mapToResponse(employee));
+    }
+
     // Helper method to map Employee entity to EmployeeResponse DTO
     private EmployeeResponse mapToResponse(Employee employee) {
         return EmployeeResponse.builder()
                 .id(employee.getId())
-                .name(employee.getName())
-                .email(employee.getEmail())
+                .userId(employee.getUser().getId())
+                .username(employee.getUser().getUsername())
+                .email(employee.getUser().getEmail())
                 .department(employee.getDepartment())
                 .designation(employee.getDesignation())
                 .phoneNumber(employee.getPhoneNumber())
