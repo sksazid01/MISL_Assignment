@@ -76,16 +76,16 @@ public class AuthController {
             // Store tokens in httpOnly cookies
             Cookie accessTokenCookie = new Cookie("accessToken", accessToken);
             accessTokenCookie.setHttpOnly(true);
-            accessTokenCookie.setSecure(false); // Set to true in production with HTTPS
+            accessTokenCookie.setSecure(false); 
             accessTokenCookie.setPath("/");
-            accessTokenCookie.setMaxAge(15 * 60); // 15 minutes
+            accessTokenCookie.setMaxAge((int) (jwtUtil.getExpiration() / 1000)); // Convert ms to seconds
             response.addCookie(accessTokenCookie);
 
             Cookie refreshTokenCookie = new Cookie("refreshToken", refreshToken);
             refreshTokenCookie.setHttpOnly(true);
-            refreshTokenCookie.setSecure(false); // Set to true in production with HTTPS
+            refreshTokenCookie.setSecure(false);
             refreshTokenCookie.setPath("/");
-            refreshTokenCookie.setMaxAge(7 * 24 * 60 * 60); // 7 days
+            refreshTokenCookie.setMaxAge((int) (jwtUtil.getRefreshExpiration() / 1000)); // Convert ms to seconds
             response.addCookie(refreshTokenCookie);
 
             User user = userRepository.findByUsername(userDetails.getUsername())
@@ -130,14 +130,14 @@ public class AuthController {
                 accessTokenCookie.setHttpOnly(true);
                 accessTokenCookie.setSecure(false); // Set to true in production with HTTPS
                 accessTokenCookie.setPath("/");
-                accessTokenCookie.setMaxAge(15 * 60); // 15 minutes
+                accessTokenCookie.setMaxAge((int) (jwtUtil.getExpiration() / 1000)); // Convert ms to seconds
                 response.addCookie(accessTokenCookie);
 
                 Cookie refreshTokenCookie = new Cookie("refreshToken", newRefreshToken);
                 refreshTokenCookie.setHttpOnly(true);
                 refreshTokenCookie.setSecure(false); // Set to true in production with HTTPS
                 refreshTokenCookie.setPath("/");
-                refreshTokenCookie.setMaxAge(7 * 24 * 60 * 60); // 7 days
+                refreshTokenCookie.setMaxAge((int) (jwtUtil.getRefreshExpiration() / 1000)); // Convert ms to seconds
                 response.addCookie(refreshTokenCookie);
 
                 AuthResponse authResponse = AuthResponse.builder()

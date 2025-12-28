@@ -111,4 +111,13 @@ public class JwtUtil {
             return false;
         }
     }
+
+    // Getter methods for expiration values
+    public Long getExpiration() {
+        return expiration;
+    }
+
+    public Long getRefreshExpiration() {
+        return refreshExpiration;
+    }
 }
