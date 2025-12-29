@@ -1,35 +1,80 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
+import Layout from './components/Layout';
+
+// Auth Pages
+import Login from './pages/Login';
+import Register from './pages/Register';
+
+// Dashboard
+import Dashboard from './pages/Dashboard';
+
+// Employee Pages
+import EmployeeList from './pages/EmployeeList';
+import EmployeeForm from './pages/EmployeeForm';
+import EmployeeDetails from './pages/EmployeeDetails';
+
+// Leave Pages
+import LeaveList from './pages/LeaveList';
+import LeaveForm from './pages/LeaveForm';
+import LeaveDetails from './pages/LeaveDetails';
+import PendingLeaves from './pages/PendingLeaves';
+
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Router>
+      <AuthProvider>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+
+          {/* Protected Routes */}
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Layout />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<Dashboard />} />
+            
+            {/* Employee Routes */}
+            <Route path="employees" element={<EmployeeList />} />
+            <Route path="employees/new" element={
+              <ProtectedRoute adminOnly>
+                <EmployeeForm />
+              </ProtectedRoute>
+            } />
+            <Route path="employees/edit/:id" element={
+              <ProtectedRoute adminOnly>
+                <EmployeeForm />
+              </ProtectedRoute>
+            } />
+            <Route path="employees/:id" element={<EmployeeDetails />} />
+
+            {/* Leave Routes */}
+            <Route path="leaves" element={<LeaveList />} />
+            <Route path="leaves/new" element={<LeaveForm />} />
+            <Route path="leaves/edit/:id" element={<LeaveForm />} />
+            <Route path="leaves/:id" element={<LeaveDetails />} />
+            <Route path="leaves/pending" element={
+              <ProtectedRoute adminOnly>
+                <PendingLeaves />
+              </ProtectedRoute>
+            } />
+          </Route>
+
+          {/* Catch all */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </AuthProvider>
+    </Router>
+  );
 }
 
-export default App
+export default App;

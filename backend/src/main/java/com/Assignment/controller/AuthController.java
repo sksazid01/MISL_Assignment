@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseCookie;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -183,28 +184,13 @@ public class AuthController {
     public ResponseEntity<?> getAllUsers() {
         List<User> users = userRepository.findAll();
         List<UserResponse> userResponses = users.stream()
-                .map(user -> new UserResponse(
-                    user.getId(),
-                    user.getUsername(),
-                    user.getEmail(),
-                    user.getRole().name()
-                ))
-                .collect(java.util.stream.Collectors.toList());
+                .map(user -> UserResponse.builder()
+                        .id(user.getId())
+                        .username(user.getUsername())
+                        .email(user.getEmail())
+                        .role(user.getRole().name())
+                        .build())
+                .collect(Collectors.toList());
         return ResponseEntity.ok(userResponses);
-    }
-}
-
-// Simple DTO for user list response
-class UserResponse {
-    public Long id;
-    public String username;
-    public String email;
-    public String role;
-
-    public UserResponse(Long id, String username, String email, String role) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.role = role;
     }
 }

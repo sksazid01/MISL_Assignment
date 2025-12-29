@@ -1,0 +1,256 @@
+/* Leave Styles */
+.leave-list-container,
+.leave-details-container,
+.pending-leaves-container {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.status-badge.pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-badge.approved {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-badge.rejected {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Leave Details */
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.detail-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 24px;
+}
+
+.info-section {
+  margin-bottom: 24px;
+}
+
+.info-section h4 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: #667eea;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+.reason-section,
+.rejection-section {
+  background-color: #f9f9f9;
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 24px;
+}
+
+.reason-section h4,
+.rejection-section h4 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.reason-section p,
+.rejection-section p {
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.rejection-section {
+  background-color: #fff3f3;
+  border-left: 4px solid #f44336;
+}
+
+.btn-success {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn-success:hover:not(:disabled) {
+  background-color: #45a049;
+}
+
+/* Pending Leaves */
+.badge {
+  background-color: #667eea;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.pending-leaves-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 20px;
+}
+
+.pending-leave-card {
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.3s;
+}
+
+.pending-leave-card:hover {
+  border-color: #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.card-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.leave-type {
+  background-color: #e3f2fd;
+  color: #1976d2;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.card-body {
+  margin-bottom: 16px;
+}
+
+.card-body .reason {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.card-body .reason p {
+  margin: 4px 0 0 0;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+/* Enhanced Modal Animation */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-content {
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+/* Table Hover Effects */
+.leave-list-table tr:hover,
+.pending-leaves-table tr:hover {
+  background-color: #f8f9fa;
+  transition: background-color 0.2s;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .leave-list-container,
+  .leave-details-container,
+  .pending-leaves-container {
+    padding: 16px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-buttons .btn {
+    width: 100%;
+  }
+
+  .modal-content {
+    padding: 16px;
+    max-width: 95%;
+  }
+
+  table {
+    font-size: 13px;
+  }
+
+  th, td {
+    padding: 8px !important;
+  }
+}

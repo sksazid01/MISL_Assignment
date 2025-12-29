@@ -1,0 +1,347 @@
+/* Dashboard Styles */
+.dashboard-container {
+  padding: 0;
+}
+
+.dashboard-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 40px;
+  border-radius: 12px;
+  margin-bottom: 32px;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.dashboard-header h1 {
+  margin: 0 0 8px 0;
+  font-size: 36px;
+}
+
+.dashboard-header p {
+  margin: 0;
+  font-size: 16px;
+  opacity: 0.95;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.stat-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+
+.stat-icon.employee {
+  background-color: #e3f2fd;
+}
+
+.stat-icon.active {
+  background-color: #e8f5e9;
+}
+
+.stat-icon.leave {
+  background-color: #fff3e0;
+}
+
+.stat-icon.pending {
+  background-color: #fff9c4;
+}
+
+.stat-icon.approved {
+  background-color: #c8e6c9;
+}
+
+.stat-icon.rejected {
+  background-color: #ffcdd2;
+}
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-content h3 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #666;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}
+
+.stat-link {
+  display: inline-block;
+  margin-top: 8px;
+  color: #667eea;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.stat-link:hover {
+  text-decoration: underline;
+}
+
+.quick-actions {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.quick-actions h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 24px;
+}
+
+.action-buttons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.action-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 32px 24px;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.3s;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  transition: left 0.5s;
+}
+
+.action-card:hover::before {
+  left: 100%;
+}
+
+.action-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(102, 126, 234, 0.4);
+}
+
+.action-icon {
+  font-size: 40px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.action-card h3 {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+}
+
+.action-card p {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.recent-section {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-header h2 {
+  margin: 0;
+  color: #333;
+  font-size: 24px;
+}
+
+.view-all-link {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.view-all-link:hover {
+  text-decoration: underline;
+}
+
+.recent-leaves-table {
+  overflow-x: auto;
+}
+
+.recent-leaves-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.recent-leaves-table th,
+.recent-leaves-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.recent-leaves-table th {
+  background-color: #f5f7fa;
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.recent-leaves-table td {
+  color: #666;
+  font-size: 14px;
+}
+
+.recent-leaves-table tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-header {
+    padding: 24px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 28px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .action-buttons-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .recent-leaves-table {
+    overflow-x: auto;
+  }
+
+  .recent-leaves-table table {
+    min-width: 600px;
+  }
+}
+
+/* Additional Button Styling */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: #667eea;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #5568d3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 13px;
+  background-color: #667eea;
+  color: white;
+}
+
+.btn-sm:hover {
+  background-color: #5568d3;
+}
+
+/* Fade-in animation for dashboard elements */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dashboard-header,
+.stat-card,
+.quick-actions,
+.recent-section {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Empty State Styling */
+.empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  color: #999;
+  background-color: #fafbfc;
+  border: 2px dashed #e1e4e8;
+  border-radius: 8px;
+}
+
+.empty-state p {
+  margin: 0 0 16px 0;
+  color: #666;
+  font-size: 16px;
+}
+
+.empty-state .btn {
+  margin-top: 8px;
+}

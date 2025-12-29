@@ -1,0 +1,164 @@
+/* Layout Styles */
+.app-layout {
+  min-height: 100vh;
+  background-color: #f5f7fa;
+}
+
+.navbar {
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.navbar-brand {
+  font-size: 20px;
+  font-weight: 700;
+  color: #333;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand-icon {
+  font-size: 24px;
+}
+
+.navbar-menu {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+  justify-content: center;
+}
+
+.nav-link {
+  padding: 8px 16px;
+  color: #666;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  background-color: #f0f2f5;
+  color: #333;
+}
+
+.nav-link.active {
+  background-color: #667eea;
+  color: white;
+}
+
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 120px;
+}
+
+.user-name {
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 150px;
+}
+
+.user-role {
+  font-size: 11px;
+  color: #fff;
+  background-color: #667eea;
+  padding: 2px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.btn-logout {
+  background-color: #f44336;
+  color: white;
+  padding: 8px 16px;
+}
+
+.btn-logout:hover {
+  background-color: #d32f2f;
+}
+
+.main-content {
+  padding: 24px;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.loading {
+  text-align: center;
+  padding: 60px 40px;
+  color: #667eea;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.loading::after {
+  content: '...';
+  animation: dots 1.5s steps(4, end) infinite;
+}
+
+@keyframes dots {
+  0%, 20% { content: '.'; }
+  40% { content: '..'; }
+  60%, 100% { content: '...'; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar-container {
+    flex-direction: column;
+    height: auto;
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .navbar-brand {
+    font-size: 18px;
+  }
+
+  .navbar-menu {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .navbar-user {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .user-info {
+    align-items: flex-start;
+  }
+}
