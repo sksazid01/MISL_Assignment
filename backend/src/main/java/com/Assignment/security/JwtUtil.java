@@ -55,10 +55,11 @@ public class JwtUtil {
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = extractAllClaims(token);
-        return claimsResolver.apply(claims);
+        final Claims claims = extractAllClaims(token); // claims -> payload
+        return claimsResolver.apply(claims); // claims.function() -> claims.getSubject()
     }
 
+    // returns the payload from jwt token
     private Claims extractAllClaims(String token) {
         return Jwts.parser()
                 .verifyWith(getSigningKey())
@@ -73,7 +74,7 @@ public class JwtUtil {
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("authorities", userDetails.getAuthorities());
+        claims.put("authorities", userDetails.getAuthorities()); // authorities -> role
         return createToken(claims, userDetails.getUsername(), expiration);
     }
 
