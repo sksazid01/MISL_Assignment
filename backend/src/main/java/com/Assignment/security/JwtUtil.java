@@ -17,7 +17,6 @@ import java.util.function.Function;
 
 @Component
 public class JwtUtil {
-
     @Value("${jwt.secret}")
     private String secret;
 
@@ -26,13 +25,14 @@ public class JwtUtil {
 
     @Value("${jwt.refresh-expiration}")
     private Long refreshExpiration;
-
+ 
     private SecretKey getSigningKey() {
         if (secret == null || secret.isBlank()) {
             throw new IllegalStateException("Missing JWT secret. Set 'jwt.secret' (recommended via JWT_SECRET env var).");
         }
 
         byte[] keyBytes;
+
         try {
             keyBytes = Decoders.BASE64.decode(secret);
         } catch (IllegalArgumentException ex) {
@@ -42,10 +42,7 @@ public class JwtUtil {
         try {
             return Keys.hmacShaKeyFor(keyBytes);
         } catch (Exception ex) {
-            throw new IllegalStateException(
-                    "JWT secret is too short/weak. Provide at least 32 bytes (or base64-encoded 32+ bytes).",
-                    ex
-            );
+            throw new IllegalStateException("JWT secret is too short/weak. Provide at least 32 bytes (or base64-encoded 32+ bytes).", ex);
         }
     }
 
@@ -112,7 +109,6 @@ public class JwtUtil {
         }
     }
 
-    // Getter methods for expiration values
     public Long getExpiration() {
         return expiration;
     }
