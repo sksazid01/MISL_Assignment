@@ -34,11 +34,15 @@ public interface LeaveRepository extends JpaRepository<Leave, Long> {
         @Param("startDate") LocalDate startDate,
         @Param("endDate") LocalDate endDate
     );
+
+    //  List<Leave> findByStartDateGreaterThanEqualAndEndDateLessThanEqual(
+    //     LocalDate startDate,
+    //     LocalDate endDate
+    // );
     
-    @Query("SELECT l FROM Leave l WHERE l.employee.department = :department AND l.status = :status")
-    List<Leave> findByDepartmentAndStatus(
-        @Param("department") String department,
-        @Param("status") LeaveStatus status
+    List<Leave> findByEmployeeDepartmentAndStatus(
+        String department,
+        LeaveStatus status
     );
     
     Long countByStatus(LeaveStatus status);
