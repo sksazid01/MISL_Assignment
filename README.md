@@ -30,8 +30,8 @@ npm run dev
 ## 🏗️ Architecture
 
 ### Technology Stack
-- **Backend**: Spring Boot 3.4.1, Java 17, Spring Security
-- **Frontend**: React 18, Vite, Axios, React Router
+- **Backend**: Spring Boot 4.0.1, Java 21, Spring Security, PostgreSQL → [Backend README](backend/README.md)
+- **Frontend**: React 19, Vite, Axios, React Router → [Frontend README](frontend/README.md)
 - **Authentication**: JWT (Access + Refresh Tokens)
 - **Deployment**: Docker, Nginx
 
@@ -62,7 +62,31 @@ npm run dev
 └── docker-compose.yml     # Multi-container orchestration
 ```
 
-## 📋 Features
+## � How It Works
+
+### Authentication Flow
+1. **User Login**: Credentials sent to `/api/auth/login`
+2. **Token Generation**: Backend validates credentials and issues JWT access token (15 min) and refresh token (7 days)
+3. **Token Storage**: Tokens stored in HTTP-only cookies for security
+4. **Authenticated Requests**: Access token sent with each API request via Authorization header
+5. **Token Refresh**: When access token expires, refresh token automatically requests new access token
+6. **Logout**: Tokens cleared from cookies, invalidating session
+
+### Request Lifecycle
+1. **Frontend**: React component triggers action (e.g., fetch employees)
+2. **API Service**: Axios interceptor adds JWT token to request header
+3. **Backend**: Spring Security validates token and extracts user details
+4. **Authorization**: Role-based checks ensure user has required permissions
+5. **Business Logic**: Service layer processes request and interacts with database
+6. **Response**: Data returned as JSON, frontend updates UI
+
+### Role-Based Access Control
+- **Database Level**: JPA entities link users to employees via userId
+- **Service Layer**: Methods filter data based on user role and ownership
+- **API Level**: Spring Security annotations (`@PreAuthorize`) restrict endpoint access
+- **Frontend**: UI components conditionally render based on user role
+
+## �📋 Features
 
 ### Core Functionality
 - **Employee Management**: CRUD operations for employee records
@@ -129,6 +153,7 @@ baseURL: 'http://localhost:8080/api'
 - Spring Boot Starter Web
 - Spring Boot Starter Security
 - Spring Boot Starter Data JPA
+- PostgreSQL Driver
 - jjwt (JWT implementation)
 - Lombok
 
@@ -136,8 +161,14 @@ baseURL: 'http://localhost:8080/api'
 - React & React Router DOM
 - Axios
 - Vite
+- date-fns
 
 ## 📝 Additional Documentation
 
-- Backend: `backend/extra_files/` - Detailed implementation guides
+### Module-Specific Documentation
+- **Backend**: [backend/README.md](backend/README.md) - API setup and configuration
+- **Frontend**: [frontend/README.md](frontend/README.md) - UI components and development
+
+### Detailed Guides
+- Backend: `backend/extra_files/` - Implementation guides and API docs
 - Frontend: `frontend/extra_files/` - Component documentation and testing guides
