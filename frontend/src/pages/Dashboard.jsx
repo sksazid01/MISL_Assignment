@@ -15,7 +15,6 @@ const Dashboard = () => {
     approvedLeaves: 0,
     rejectedLeaves: 0,
   });
-  const [recentLeaves, setRecentLeaves] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -35,8 +34,6 @@ const Dashboard = () => {
         approvedLeaves: data.approvedLeaves,
         rejectedLeaves: data.rejectedLeaves,
       });
-
-      setRecentLeaves(data.recentLeaves || []);
     } catch (err) {
       console.error('Failed to fetch dashboard data:', err);
     } finally {
@@ -138,93 +135,6 @@ const Dashboard = () => {
             <p className="stat-value">{stats.rejectedLeaves}</p>
           </div>
         </div>
-      </div>
-
-      <div className="quick-actions">
-        <h2>Quick Actions</h2>
-        <div className="action-buttons-grid">
-          {(isAdmin() || employee) && (
-            <Link to="/leaves/new" className="action-card">
-              <span className="action-icon">📝</span>
-              <h3>Apply for Leave</h3>
-              <p>Submit a new leave application</p>
-            </Link>
-          )}
-          {isAdmin() && (
-            <>
-              <Link to="/employees/new" className="action-card">
-                <span className="action-icon">➕</span>
-                <h3>Add Employee</h3>
-                <p>Register a new employee</p>
-              </Link>
-              <Link to="/leaves/pending" className="action-card">
-                <span className="action-icon">✓</span>
-                <h3>Review Leaves</h3>
-                <p>Approve or reject pending leaves</p>
-              </Link>
-            </>
-          )}
-          <Link to="/employees" className="action-card">
-            <span className="action-icon">👥</span>
-            <h3>View Employees</h3>
-            <p>Browse all employees</p>
-          </Link>
-        </div>
-      </div>
-
-      <div className="recent-section">
-        <div className="section-header">
-          <h2>Recent Leave Applications</h2>
-          <Link to="/leaves" className="view-all-link">
-            View All →
-          </Link>
-        </div>
-        
-        {recentLeaves.length > 0 ? (
-          <div className="recent-leaves-table">
-            <table>
-              <thead>
-                <tr>
-                  <th>Employee</th>
-                  <th>Type</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>Days</th>
-                  <th>Status</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {recentLeaves.map((leave) => (
-                  <tr key={leave.id}>
-                    <td>{leave.employeeName}</td>
-                    <td>{leave.leaveType}</td>
-                    <td>{formatDate(leave.startDate)}</td>
-                    <td>{formatDate(leave.endDate)}</td>
-                    <td>{leave.totalDays}</td>
-                    <td>
-                      <span className={`status-badge ${getStatusColor(leave.status)}`}>
-                        {leave.status}
-                      </span>
-                    </td>
-                    <td>
-                      <Link to={`/leaves/${leave.id}`} className="btn btn-sm">
-                        View
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <div className="empty-state">
-            <p>📋 No leave applications yet</p>
-            <Link to="/leaves/new" className="btn btn-primary">
-              Apply for Your First Leave
-            </Link>
-          </div>
-        )}
       </div>
     </div>
   );

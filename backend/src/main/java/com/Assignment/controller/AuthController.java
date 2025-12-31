@@ -51,14 +51,14 @@ public class AuthController {
         if (userRepository.existsByUsername(registerRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Username is already taken!"));
+                    .body(new MessageResponse("Username is already taken"));
         }
 
         // Check if email already exists
         if (userRepository.existsByEmail(registerRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Email is already in use!"));
+                    .body(new MessageResponse("Email is already in use"));
         }
 
         // Create new user

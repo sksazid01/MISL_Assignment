@@ -25,20 +25,35 @@
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
   margin-bottom: 32px;
+}
+
+@media (max-width: 1200px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
 }
 
 .stat-card {
   background: white;
   border-radius: 12px;
-  padding: 24px;
+  padding: 28px;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   transition: all 0.3s;
+  min-height: 120px;
 }
 
 .stat-card:hover {

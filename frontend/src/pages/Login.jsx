@@ -38,9 +38,10 @@ const Login = () => {
         if (typeof err.response.data === 'string') {
           errorMessage = err.response.data;
         } else if (err.response.data.message) {
-          errorMessage = err.response.data.message;
+          // Remove "Error: " prefix if present for cleaner display
+          errorMessage = err.response.data.message.replace(/^Error:\s*/, '');
         } else if (err.response.data.error) {
-          errorMessage = err.response.data.error;
+          errorMessage = err.response.data.error.replace(/^Error:\s*/, '');
         }
       } else if (err.message) {
         errorMessage = err.message;

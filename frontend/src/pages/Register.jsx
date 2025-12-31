@@ -13,6 +13,7 @@ const Register = () => {
     confirmPassword: '',
   });
   const [error, setError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -20,11 +21,20 @@ const Register = () => {
       ...formData,
       [e.target.name]: e.target.value,
     });
+    // Clear field error when user starts typing
+    if (fieldErrors[e.target.name]) {
+      setFieldErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[e.target.name];
+        return newErrors;
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setFieldErrors({});
 
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
@@ -44,17 +54,37 @@ const Register = () => {
       navigate('/login');
     } catch (err) {
       console.error('Registration error:', err);
+      console.log('Error response data:', err.response?.data);
+      console.log('Error response data type:', typeof err.response?.data);
       
       // Handle different error response formats
       let errorMessage = 'Registration failed. Please try again.';
       
       if (err.response?.data) {
-        if (typeof err.response.data === 'string') {
-          errorMessage = err.response.data;
-        } else if (err.response.data.message) {
-          errorMessage = err.response.data.message;
-        } else if (err.response.data.error) {
-          errorMessage = err.response.data.error;
+        const data = err.response.data;
+        
+        // Check if backend returned field-specific validation errors
+        // Field errors come as an object like {username: "error message", email: "error message"}
+        if (typeof data === 'object' && !data.message && !Array.isArray(data)) {
+          // Check if it's a field validation error object (has field names as keys)
+          const keys = Object.keys(data);
+          const isFieldError = keys.length > 0 && keys.some(key => 
+            ['username', 'email', 'password'].includes(key)
+          );
+          
+          if (isFieldError) {
+            console.log('Setting field errors:', data);
+            setFieldErrors(data);
+            errorMessage = 'Please fix the validation errors below.';
+          } else if (data.message) {
+            errorMessage = data.message;
+          }
+        } else if (typeof data === 'string') {
+          errorMessage = data;
+        } else if (data.message) {
+          errorMessage = data.message;
+        } else if (data.error) {
+          errorMessage = data.error;
         }
       } else if (err.message) {
         errorMessage = err.message;
@@ -84,7 +114,9 @@ const Register = () => {
               value={formData.username}
               onChange={handleChange}
               required
+              className={fieldErrors.username ? 'error-input' : ''}
             />
+            {fieldErrors.username && <div className="field-error">{fieldErrors.username}</div>}
           </div>
 
           <div className="form-group">
@@ -96,7 +128,9 @@ const Register = () => {
               value={formData.email}
               onChange={handleChange}
               required
+              className={fieldErrors.email ? 'error-input' : ''}
             />
+            {fieldErrors.email && <div className="field-error">{fieldErrors.email}</div>}
           </div>
 
           <div className="form-group">
@@ -109,7 +143,9 @@ const Register = () => {
               onChange={handleChange}
               required
               minLength="6"
+              className={fieldErrors.password ? 'error-input' : ''}
             />
+            {fieldErrors.password && <div className="field-error">{fieldErrors.password}</div>}
           </div>
 
           <div className="form-group">

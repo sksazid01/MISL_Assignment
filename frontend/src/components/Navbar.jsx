@@ -23,14 +23,6 @@ const Navbar = () => {
              (location.pathname.startsWith('/leaves/') && 
               !location.pathname.startsWith('/leaves/pending'));
     }
-    if (path === '/employees' && location.pathname.startsWith('/employees/')) {
-      return location.pathname === '/employees' || 
-             location.pathname.startsWith('/employees/edit/') ||
-             (location.pathname.match(/^\/employees\/\d+$/) !== null);
-    }
-    if (path === '/employees/new') {
-      return location.pathname === '/employees/new';
-    }
     return location.pathname === path || location.pathname.startsWith(path + '/');
   };
 
@@ -55,14 +47,6 @@ const Navbar = () => {
           >
             Employees
           </Link>
-          {isAdmin() && (
-            <Link
-              to="/employees/new"
-              className={`nav-link-add-btn ${isActive('/employees/new') ? 'active' : ''}`}
-            >
-              + Add Employee
-            </Link>
-          )}
           {(isAdmin() || employee) && (
             <Link
               to="/leaves"

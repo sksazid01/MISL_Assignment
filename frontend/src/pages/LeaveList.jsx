@@ -92,11 +92,6 @@ const LeaveList = () => {
         >
           Rejected
         </button>
-        {isAdmin() && (
-          <Link to="/leaves/pending" className="btn btn-info" style={{ marginLeft: 'auto' }}>
-            Review Pending Leaves
-          </Link>
-        )}
       </div>
 
       <div className="leaves-table">

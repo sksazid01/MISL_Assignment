@@ -18,5 +18,4 @@ public class DashboardStats {
     private Long pendingLeaves;
     private Long approvedLeaves;
     private Long rejectedLeaves;
-    private List<LeaveResponse> recentLeaves;
 }

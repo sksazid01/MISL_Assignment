@@ -68,6 +68,11 @@ const EmployeeList = () => {
     <div className="employee-list-container">
       <div className="page-header">
         <h2>Employees</h2>
+        {isAdmin() && (
+          <Link to="/employees/new" className="btn btn-primary">
+            Add Employee
+          </Link>
+        )}
       </div>
 
       <div className="filters">

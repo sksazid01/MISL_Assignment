@@ -37,7 +37,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<MessageResponse> handleUsernameNotFoundException(UsernameNotFoundException ex) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
-                .body(new MessageResponse("Error: " + ex.getMessage()));
+                .body(new MessageResponse(ex.getMessage()));
     }
 
     @ExceptionHandler(BadCredentialsException.class)
@@ -45,7 +45,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<MessageResponse> handleBadCredentialsException(BadCredentialsException ex) {
         return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)
-                .body(new MessageResponse("Error: Invalid username or password"));
+                .body(new MessageResponse("Invalid username or password"));
     }
 
     @ExceptionHandler(AccessDeniedException.class)
@@ -53,7 +53,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<MessageResponse> handleAccessDeniedException(AccessDeniedException ex) {
         return ResponseEntity
                 .status(HttpStatus.FORBIDDEN)
-                .body(new MessageResponse("Error: Access denied - " + ex.getMessage()));
+                .body(new MessageResponse("Access denied - " + ex.getMessage()));
     }
 
     @ExceptionHandler(ExpiredJwtException.class)
@@ -61,7 +61,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<MessageResponse> handleExpiredJwtException(ExpiredJwtException ex) {
         return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)
-                .body(new MessageResponse("Error: JWT token has expired"));
+                .body(new MessageResponse("JWT token has expired"));
     }
 
     @ExceptionHandler(SignatureException.class)
@@ -69,7 +69,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<MessageResponse> handleSignatureException(SignatureException ex) {
         return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)
-                .body(new MessageResponse("Error: Invalid JWT signature"));
+                .body(new MessageResponse("Invalid JWT signature"));
     }
 
     @ExceptionHandler(RuntimeException.class)
@@ -77,7 +77,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<MessageResponse> handleRuntimeException(RuntimeException ex) {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new MessageResponse("Error: " + ex.getMessage()));
+                .body(new MessageResponse(ex.getMessage()));
     }
 
     @ExceptionHandler(Exception.class)
@@ -85,6 +85,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<MessageResponse> handleGlobalException(Exception ex) {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new MessageResponse("Error: An unexpected error occurred - " + ex.getMessage()));
+                .body(new MessageResponse("An unexpected error occurred - " + ex.getMessage()));
     }
 }

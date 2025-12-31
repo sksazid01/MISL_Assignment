@@ -46,6 +46,4 @@ public interface LeaveRepository extends JpaRepository<Leave, Long> {
     );
     
     Long countByStatus(LeaveStatus status);
-    
-    List<Leave> findTop5ByOrderByAppliedDateDesc();
 }

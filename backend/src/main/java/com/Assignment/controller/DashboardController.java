@@ -35,12 +35,6 @@ public class DashboardController {
         Long approvedLeaves = leaveRepository.countByStatus(LeaveStatus.APPROVED);
         Long rejectedLeaves = leaveRepository.countByStatus(LeaveStatus.REJECTED);
 
-        // Fetch only recent 5 leaves with necessary data
-        List<Leave> recentLeavesList = leaveRepository.findTop5ByOrderByAppliedDateDesc();
-        List<LeaveResponse> recentLeaves = recentLeavesList.stream()
-                .map(this::mapToResponse)
-                .collect(Collectors.toList());
-
         DashboardStats stats = DashboardStats.builder()
                 .totalEmployees(totalEmployees)
                 .activeEmployees(activeEmployees)
@@ -48,7 +42,6 @@ public class DashboardController {
                 .pendingLeaves(pendingLeaves)
                 .approvedLeaves(approvedLeaves)
                 .rejectedLeaves(rejectedLeaves)
-                .recentLeaves(recentLeaves)
                 .build();
 
         return ResponseEntity.ok(stats);
