@@ -50,6 +50,7 @@
   border-radius: 6px;
   transition: all 0.2s;
   font-weight: 500;
+  background-color: white;
 }
 
 .nav-link:hover {
@@ -58,6 +59,28 @@
 }
 
 .nav-link.active {
+  background-color: #667eea;
+  color: white;
+}
+
+.nav-link-add-btn {
+  padding: 8px 12px;
+  background-color: white;
+  color: #666;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.2s;
+  font-weight: 500;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.nav-link-add-btn:hover {
+  background-color: #f0f2f5;
+  color: #333;
+}
+
+.nav-link-add-btn.active {
   background-color: #667eea;
   color: white;
 }

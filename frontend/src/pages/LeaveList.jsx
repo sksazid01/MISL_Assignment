@@ -62,7 +62,7 @@ const LeaveList = () => {
     <div className="leave-list-container">
       <div className="page-header">
         <h2>Leave Applications</h2>
-        <Link to="/leaves/new" className="btn btn-primary">
+        <Link to="/leaves/new" className="btn btn-primary btn-apply-leave">
           Apply for Leave
         </Link>
       </div>

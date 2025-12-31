@@ -65,7 +65,31 @@ src/main/java/com/Assignment/
 - `POST /register` - User registration
 - `POST /login` - User login
 - `POST /refresh` - Refresh access token
-- `POST /logout` - Logout
+- `POST /logout` - Logout// Online C++ compiler to run C++ program online
+#include <stdio.h>
+
+int main() {
+    
+    int n, sum=0;
+    
+    
+    scanf("%d", &n); // cin>>n;
+    
+    for(int i=1; i<=n; i++){
+        sum = sum+i*i;
+    }
+    
+    
+    // printf("Enter the value of a, b, c\n");
+    
+    
+    // scanf("%d %d %d", &a, &b, &c);
+    
+    // sum = a + b + c;
+    
+    printf("Sum = %d",sum); // cout<<"Sum = "<<sum;
+    return 0;
+}
 
 ### Employees (`/api/employees`)
 - `GET /` - List all employees (ADMIN) or own profile (USER)
