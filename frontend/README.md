@@ -22,6 +22,7 @@ npm run preview
 docker build -t leave-tracker-frontend .
 docker run -p 3000:80 leave-tracker-frontend
 ```
+Access at: http://localhost:3000/login (production build)
 
 ## 📁 Project Structure
 

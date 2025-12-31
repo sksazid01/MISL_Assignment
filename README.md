@@ -8,7 +8,7 @@ A full-stack web application for managing employee information and leave request
 ```bash
 docker-compose up --build
 ```
-- Frontend: http://localhost:3000
+- Frontend: http://localhost:3000/login
 - Backend API: http://localhost:8080
 
 ### Manual Setup
@@ -26,6 +26,7 @@ cd frontend
 npm install
 npm run dev
 ```
+Access at: http://localhost:5173 (dev server)
 
 ## 🏗️ Architecture
 
@@ -110,6 +111,14 @@ npm run dev
 Admin user is automatically created on first run:
 - **Username**: admin
 - **Password**: admin123
+
+## 🧪 API Testing with Postman
+
+Import the Postman collection for easy API testing:
+- **Collection File**: `backend/JWT_Authentication_API.postman_collection.json`
+- **Import**: Open Postman → Import → Select the JSON file
+- **Features**: Pre-configured requests with descriptions, authentication endpoints, employee/leave CRUD operations
+- **Authentication**: Tokens are managed via httpOnly cookies automatically (no manual header setup needed)
 
 ## 📡 API Endpoints
 
