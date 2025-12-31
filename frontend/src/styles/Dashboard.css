@@ -3,6 +3,14 @@
   padding: 0;
 }
 
+.dashboard-inner {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
 .dashboard-header {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
@@ -25,93 +33,46 @@
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(2, auto);
   gap: 24px;
   margin-bottom: 32px;
 }
 
-@media (max-width: 1200px) {
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-}
-
-@media (max-width: 768px) {
-  .stats-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-}
-
 .stat-card {
   background: white;
-  border-radius: 12px;
-  padding: 28px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s;
-  min-height: 120px;
+  border-radius: 10px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-align: center;
 }
 
 .stat-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .stat-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
-}
-
-.stat-icon.employee {
-  background-color: #e3f2fd;
-}
-
-.stat-icon.active {
-  background-color: #e8f5e9;
-}
-
-.stat-icon.leave {
-  background-color: #fff3e0;
-}
-
-.stat-icon.pending {
-  background-color: #fff9c4;
-}
-
-.stat-icon.approved {
-  background-color: #c8e6c9;
-}
-
-.stat-icon.rejected {
-  background-color: #ffcdd2;
-}
-
-.stat-content {
-  flex: 1;
+  font-size: 48px;
+  margin-bottom: 12px;
+  display: block;
 }
 
 .stat-content h3 {
   margin: 0 0 8px 0;
-  font-size: 14px;
+  font-size: 13px;
   color: #666;
   text-transform: uppercase;
   font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 .stat-value {
-  font-size: 32px;
+  font-size: 36px;
   font-weight: 700;
   color: #333;
-  margin: 0;
+  margin: 8px 0;
 }
 
 .stat-link {
@@ -119,12 +80,23 @@
   margin-top: 8px;
   color: #667eea;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
 }
 
 .stat-link:hover {
   text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .stat-card {
+    padding: 20px;
+  }
+
+  .stat-value {
+    font-size: 32px;
+  }
 }
 
 .quick-actions {

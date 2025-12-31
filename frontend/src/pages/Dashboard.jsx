@@ -58,81 +58,83 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <div className="dashboard-header">
-        <h1>Welcome, {user?.username}!</h1>
-        <p>Here's an overview of the Employee Leave Management System</p>
-        {!isAdmin() && !employee && (
-          <div style={{ marginTop: '16px', padding: '12px', backgroundColor: '#fff3cd', color: '#856404', borderRadius: '8px', border: '1px solid #ffeaa7' }}>
-            ⚠️ You don't have an employee record yet. Contact your administrator to create one so you can apply for leave.
-          </div>
-        )}
-        {!isAdmin() && employee && (
-          <div style={{ marginTop: '16px', padding: '12px', backgroundColor: '#d4edda', color: '#155724', borderRadius: '8px', border: '1px solid #c3e6cb' }}>
-            ✓ Employee Status: <strong>{employee.username}</strong> - {employee.department}
-          </div>
-        )}
-      </div>
-
-      <div className="stats-grid">
-        <div className="stat-card">
-          <div className="stat-icon employee">👥</div>
-          <div className="stat-content">
-            <h3>Total Employees</h3>
-            <p className="stat-value">{stats.totalEmployees}</p>
-            <Link to="/employees" className="stat-link">
-              View all →
-            </Link>
-          </div>
+      <div className="dashboard-inner">
+        <div className="dashboard-header">
+          <h1>Welcome, {user?.username}!</h1>
+          <p>Here's an overview of the Employee Leave Management System</p>
+          {!isAdmin() && !employee && (
+            <div style={{ marginTop: '16px', padding: '12px', backgroundColor: '#fff3cd', color: '#856404', borderRadius: '8px', border: '1px solid #ffeaa7' }}>
+              ⚠️ You don't have an employee record yet. Contact your administrator to create one so you can apply for leave.
+            </div>
+          )}
+          {!isAdmin() && employee && (
+            <div style={{ marginTop: '16px', padding: '12px', backgroundColor: '#d4edda', color: '#155724', borderRadius: '8px', border: '1px solid #c3e6cb' }}>
+              ✓ Employee Status: <strong>{employee.username}</strong> - {employee.department}
+            </div>
+          )}
         </div>
 
-        <div className="stat-card">
-          <div className="stat-icon active">✓</div>
-          <div className="stat-content">
-            <h3>Active Employees</h3>
-            <p className="stat-value">{stats.activeEmployees}</p>
-            <Link to="/employees" className="stat-link">
-              View all →
-            </Link>
-          </div>
-        </div>
-
-        <div className="stat-card">
-          <div className="stat-icon leave">📋</div>
-          <div className="stat-content">
-            <h3>Total Leaves</h3>
-            <p className="stat-value">{stats.totalLeaves}</p>
-            <Link to="/leaves" className="stat-link">
-              View all →
-            </Link>
-          </div>
-        </div>
-
-        <div className="stat-card">
-          <div className="stat-icon pending">⏳</div>
-          <div className="stat-content">
-            <h3>Pending Leaves</h3>
-            <p className="stat-value">{stats.pendingLeaves}</p>
-            {isAdmin() && (
-              <Link to="/leaves/pending" className="stat-link">
-                Review →
+        <div className="stats-grid">
+          <div className="stat-card">
+            <div className="stat-icon">👥</div>
+            <div className="stat-content">
+              <h3>Total Employees</h3>
+              <p className="stat-value">{stats.totalEmployees}</p>
+              <Link to="/employees" className="stat-link">
+                View all →
               </Link>
-            )}
+            </div>
           </div>
-        </div>
 
-        <div className="stat-card">
-          <div className="stat-icon approved">✅</div>
-          <div className="stat-content">
-            <h3>Approved Leaves</h3>
-            <p className="stat-value">{stats.approvedLeaves}</p>
+          <div className="stat-card">
+            <div className="stat-icon">✓</div>
+            <div className="stat-content">
+              <h3>Active Employees</h3>
+              <p className="stat-value">{stats.activeEmployees}</p>
+              <Link to="/employees" className="stat-link">
+                View all →
+              </Link>
+            </div>
           </div>
-        </div>
 
-        <div className="stat-card">
-          <div className="stat-icon rejected">❌</div>
-          <div className="stat-content">
-            <h3>Rejected Leaves</h3>
-            <p className="stat-value">{stats.rejectedLeaves}</p>
+          <div className="stat-card">
+            <div className="stat-icon">📋</div>
+            <div className="stat-content">
+              <h3>Total Leaves</h3>
+              <p className="stat-value">{stats.totalLeaves}</p>
+              <Link to="/leaves" className="stat-link">
+                View all →
+              </Link>
+            </div>
+          </div>
+
+          <div className="stat-card">
+            <div className="stat-icon">⏳</div>
+            <div className="stat-content">
+              <h3>Pending Leaves</h3>
+              <p className="stat-value">{stats.pendingLeaves}</p>
+              {isAdmin() && (
+                <Link to="/leaves/pending" className="stat-link">
+                  Review →
+                </Link>
+              )}
+            </div>
+          </div>
+
+          <div className="stat-card">
+            <div className="stat-icon">✅</div>
+            <div className="stat-content">
+              <h3>Approved Leaves</h3>
+              <p className="stat-value">{stats.approvedLeaves}</p>
+            </div>
+          </div>
+
+          <div className="stat-card">
+            <div className="stat-icon">❌</div>
+            <div className="stat-content">
+              <h3>Rejected Leaves</h3>
+              <p className="stat-value">{stats.rejectedLeaves}</p>
+            </div>
           </div>
         </div>
       </div>
