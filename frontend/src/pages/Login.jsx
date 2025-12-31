@@ -29,8 +29,6 @@ const Login = () => {
       await login(formData);
       navigate('/');
     } catch (err) {
-      console.error('Login error:', err);
-      
       // Handle different error response formats
       let errorMessage = 'Login failed. Please check your credentials.';
       

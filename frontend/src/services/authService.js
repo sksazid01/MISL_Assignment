@@ -21,11 +21,6 @@ const authService = {
     return response.data;
   },
 
-  refreshToken: async () => {
-    const response = await api.post('/auth/refresh');
-    return response.data;
-  },
-
   getAllUsers: async () => {
     const response = await api.get('/auth/users');
     return response.data;

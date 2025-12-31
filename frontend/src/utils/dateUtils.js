@@ -15,12 +15,10 @@ export const formatDate = (dateValue, defaultValue = 'N/A') => {
   try {
     const date = new Date(dateValue);
     if (isNaN(date.getTime())) {
-      console.error('Invalid date:', dateValue);
       return defaultValue;
     }
     return date.toLocaleDateString();
   } catch (error) {
-    console.error('Error formatting date:', dateValue, error);
     return defaultValue;
   }
 };
@@ -37,12 +35,10 @@ export const formatDateTime = (dateValue, defaultValue = 'N/A') => {
   try {
     const date = new Date(dateValue);
     if (isNaN(date.getTime())) {
-      console.error('Invalid date:', dateValue);
       return defaultValue;
     }
     return date.toLocaleString();
   } catch (error) {
-    console.error('Error formatting date-time:', dateValue, error);
     return defaultValue;
   }
 };
@@ -64,7 +60,6 @@ export const formatInputDate = (dateValue) => {
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   } catch (error) {
-    console.error('Error formatting input date:', dateValue, error);
     return '';
   }
 };

@@ -35,7 +35,7 @@ const Dashboard = () => {
         rejectedLeaves: data.rejectedLeaves,
       });
     } catch (err) {
-      console.error('Failed to fetch dashboard data:', err);
+      // Error fetching dashboard data - stats will remain at initial state
     } finally {
       setLoading(false);
     }

@@ -1,8 +1,6 @@
 package com.Assignment.controller;
 
 import com.Assignment.dto.DashboardStats;
-import com.Assignment.dto.LeaveResponse;
-import com.Assignment.entity.Leave;
 import com.Assignment.entity.LeaveStatus;
 import com.Assignment.repository.EmployeeRepository;
 import com.Assignment.repository.LeaveRepository;
@@ -12,9 +10,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/dashboard")
@@ -45,24 +40,5 @@ public class DashboardController {
                 .build();
 
         return ResponseEntity.ok(stats);
-    }
-
-    private LeaveResponse mapToResponse(Leave leave) {
-        return LeaveResponse.builder()
-                .id(leave.getId())
-                .employeeId(leave.getEmployee().getId())
-                .employeeName(leave.getEmployee().getUser().getUsername())
-                .department(leave.getEmployee().getDepartment())
-                .leaveType(leave.getLeaveType())
-                .startDate(leave.getStartDate())
-                .endDate(leave.getEndDate())
-                .reason(leave.getReason())
-                .status(leave.getStatus())
-                .appliedDate(leave.getAppliedDate())
-                .approvalDate(leave.getApprovalDate())
-                .approvedBy(leave.getApprovedBy())
-                .rejectionReason(leave.getRejectionReason())
-                .updatedAt(leave.getUpdatedAt())
-                .build();
     }
 }

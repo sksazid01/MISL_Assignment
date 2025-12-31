@@ -71,8 +71,6 @@ const EmployeeForm = () => {
       }
       navigate('/employees');
     } catch (err) {
-      console.error('Employee save error:', err);
-      
       // Handle different error response formats
       let errorMessage = 'Failed to save employee';
       

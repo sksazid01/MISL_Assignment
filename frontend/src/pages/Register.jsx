@@ -53,10 +53,6 @@ const Register = () => {
       await register({ ...registerData, role: 'USER' });
       navigate('/login');
     } catch (err) {
-      console.error('Registration error:', err);
-      console.log('Error response data:', err.response?.data);
-      console.log('Error response data type:', typeof err.response?.data);
-      
       // Handle different error response formats
       let errorMessage = 'Registration failed. Please try again.';
       
@@ -73,7 +69,6 @@ const Register = () => {
           );
           
           if (isFieldError) {
-            console.log('Setting field errors:', data);
             setFieldErrors(data);
             errorMessage = 'Please fix the validation errors below.';
           } else if (data.message) {

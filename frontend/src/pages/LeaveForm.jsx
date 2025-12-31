@@ -47,7 +47,6 @@ const LeaveForm = () => {
       const data = await employeeService.getActiveEmployees();
       setEmployees(data);
     } catch (err) {
-      console.error('Failed to fetch employees');
       setError('Failed to fetch employees. Please try again.');
     }
   };
@@ -87,8 +86,6 @@ const LeaveForm = () => {
       }
       navigate('/leaves');
     } catch (err) {
-      console.error('Leave save error:', err);
-      
       // Handle different error response formats
       let errorMessage = 'Failed to save leave application';
       

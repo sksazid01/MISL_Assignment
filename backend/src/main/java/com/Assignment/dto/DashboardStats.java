@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
 @NoArgsConstructor
@@ -19,3 +17,4 @@ public class DashboardStats {
     private Long approvedLeaves;
     private Long rejectedLeaves;
 }
+

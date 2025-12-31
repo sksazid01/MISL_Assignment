@@ -12,7 +12,8 @@ const Navbar = () => {
       await logout();
       navigate('/login');
     } catch (err) {
-      console.error('Logout failed');
+      // Logout failed, but still redirect to login page
+      navigate('/login');
     }
   };
 
