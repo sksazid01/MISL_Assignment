@@ -1,0 +1,868 @@
+{
+	"info": {
+		"_postman_id": "jwt-auth-api",
+		"name": "Employee Leave Tracker API",
+		"description": "Complete Employee Leave Management System with JWT Authentication (httpOnly cookies), Employee CRUD, and Leave Management with Approval Workflow",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"john_doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"USER\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						},
+						"description": "Register a new user with username, email, and password. Role is optional (defaults to USER)."
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"john_doe\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						},
+						"description": "Authenticate user. JWT tokens are stored in httpOnly cookies automatically. No need to manually handle tokens in frontend."
+					},
+					"response": []
+				},
+				{
+					"name": "Login (Admin)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						},
+						"description": "Login with default admin credentials. Default admin account is created automatically on first startup with username: admin, password: admin123"
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/auth/refresh",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"refresh"
+							]
+						},
+						"description": "Get new access token using refresh token from httpOnly cookie. No body needed - token read from cookie automatically."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Current User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/auth/me",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"me"
+							]
+						},
+						"description": "Get currently authenticated user details. Token read from httpOnly cookie automatically."
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/auth/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"logout"
+							]
+						},
+						"description": "Logout user by clearing httpOnly cookies."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/auth/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"users"
+							]
+						},
+						"description": "Get list of all users (for linking employees to user accounts). Requires ADMIN role."
+					},
+					"response": []
+				}
+			],
+			"description": "Authentication endpoints for registration, login, token refresh, and user info"
+		},
+		{
+			"name": "Employees",
+			"item": [
+				{
+					"name": "Get All Employees",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/employees",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"employees"
+							]
+						},
+						"description": "Get list of all employees with their linked user information (username, email). Requires authentication (USER or ADMIN)."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Employee by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/employees/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"employees",
+								"1"
+							]
+						},
+						"description": "Get employee details by ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Employees by Department",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/employees/department/Engineering",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"employees",
+								"department",
+								"Engineering"
+							]
+						},
+						"description": "Get all employees in a specific department."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Active Employees",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/employees/active",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"employees",
+								"active"
+							]
+						},
+						"description": "Get all active employees (isActive = true)."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Employee",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": 2,\n  \"department\": \"Engineering\",\n  \"designation\": \"Senior Developer\",\n  \"phoneNumber\": \"+1234567890\",\n  \"joinDate\": \"2023-01-15\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/employees",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"employees"
+							]
+						},
+						"description": "Create a new employee linked to an existing user. Requires ADMIN role. userId must reference an existing user account. Name and email are automatically retrieved from the linked user."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Employee",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": 2,\n  \"department\": \"Engineering\",\n  \"designation\": \"Lead Developer\",\n  \"phoneNumber\": \"+1234567890\",\n  \"joinDate\": \"2023-01-15\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/employees/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"employees",
+								"1"
+							]
+						},
+						"description": "Update employee details (department, designation, phone, join date). Requires ADMIN role. Note: User account cannot be changed after employee creation. Name and email come from the linked user account."
+					},
+					"response": []
+				},
+				{
+					"name": "Activate Employee",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/employees/1/activate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"employees",
+								"1",
+								"activate"
+							]
+						},
+						"description": "Activate an employee (set isActive = true). Requires ADMIN role."
+					},
+					"response": []
+				},
+				{
+					"name": "Deactivate Employee",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/employees/1/deactivate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"employees",
+								"1",
+								"deactivate"
+							]
+						},
+						"description": "Deactivate an employee (set isActive = false). Requires ADMIN role."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Employee",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/employees/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"employees",
+								"1"
+							]
+						},
+						"description": "Delete an employee permanently. Requires ADMIN role."
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Employee",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/employees/me",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"employees",
+								"me"
+							]
+						},
+						"description": "Get employee record for the currently logged-in user."
+					},
+					"response": []
+				}
+			],
+			"description": "Employee CRUD operations - manage employee records. Each employee must be linked to a user account. Employee name and email are sourced from the linked user."
+		},
+		{
+			"name": "Dashboard",
+			"item": [
+				{
+					"name": "Get Dashboard Stats",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/dashboard/stats",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"dashboard",
+								"stats"
+							]
+						},
+						"description": "Get dashboard statistics including total employees, active employees, leave counts by status, and recent leave applications."
+					},
+					"response": []
+				}
+			],
+			"description": "Dashboard statistics and overview data"
+		},
+		{
+			"name": "Leaves",
+			"item": [
+				{
+					"name": "Get All Leaves",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/leaves",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"leaves"
+							]
+						},
+						"description": "Get all leave applications. Supports filters: ?status=PENDING&employeeId=1"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Leaves (Filtered by Status)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/leaves?status=PENDING",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"leaves"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "PENDING"
+								}
+							]
+						},
+						"description": "Get leaves filtered by status (PENDING, APPROVED, REJECTED)."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Leaves (Filtered by Employee)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/leaves?employeeId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"leaves"
+							],
+							"query": [
+								{
+									"key": "employeeId",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Get leaves for a specific employee."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Leave by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/leaves/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"leaves",
+								"1"
+							]
+						},
+						"description": "Get leave details by ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Leaves by Employee",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/leaves/employee/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"leaves",
+								"employee",
+								"1"
+							]
+						},
+						"description": "Get all leaves for a specific employee."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Pending Leaves",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/leaves/pending",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"leaves",
+								"pending"
+							]
+						},
+						"description": "Get all pending leave applications. Requires ADMIN role."
+					},
+					"response": []
+				},
+				{
+					"name": "Apply for Leave",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"employeeId\": 1,\n  \"leaveType\": \"SICK\",\n  \"startDate\": \"2024-02-01\",\n  \"endDate\": \"2024-02-03\",\n  \"reason\": \"Medical appointment\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/leaves",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"leaves"
+							]
+						},
+						"description": "Submit a leave application. Leave types: SICK, CASUAL, ANNUAL, UNPAID, MATERNITY, PATERNITY, EMERGENCY."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Leave",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"employeeId\": 1,\n  \"leaveType\": \"SICK\",\n  \"startDate\": \"2024-02-01\",\n  \"endDate\": \"2024-02-05\",\n  \"reason\": \"Extended medical appointment\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/leaves/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"leaves",
+								"1"
+							]
+						},
+						"description": "Update a leave application. Only PENDING leaves can be updated."
+					},
+					"response": []
+				},
+				{
+					"name": "Approve Leave",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"APPROVED\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/leaves/1/status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"leaves",
+								"1",
+								"status"
+							]
+						},
+						"description": "Approve a leave application. Requires ADMIN role."
+					},
+					"response": []
+				},
+				{
+					"name": "Reject Leave",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"REJECTED\",\n  \"rejectionReason\": \"Insufficient leave balance\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/leaves/1/status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"leaves",
+								"1",
+								"status"
+							]
+						},
+						"description": "Reject a leave application with reason. Requires ADMIN role."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Leave",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/leaves/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"leaves",
+								"1"
+							]
+						},
+						"description": "Delete a leave application. Only PENDING leaves can be deleted."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Employee Leave Statistics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/leaves/stats/employee/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"leaves",
+								"stats",
+								"employee",
+								"1"
+							]
+						},
+						"description": "Get leave statistics for an employee (total, approved, pending, rejected, total days)."
+					},
+					"response": []
+				}
+			],
+			"description": "Leave management - apply, approve/reject, and track leave applications"
+		},
+		{
+			"name": "Test Endpoints",
+			"item": [
+				{
+					"name": "Public Access",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/test/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"test",
+								"all"
+							]
+						},
+						"description": "Public endpoint accessible without authentication."
+					},
+					"response": []
+				},
+				{
+					"name": "User Access",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/test/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"test",
+								"user"
+							]
+						},
+						"description": "Endpoint accessible to users with USER or ADMIN role. Token read from httpOnly cookie automatically."
+					},
+					"response": []
+				},
+				{
+					"name": "Admin Access",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/test/admin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"test",
+								"admin"
+							]
+						},
+						"description": "Endpoint accessible only to users with ADMIN role. Token read from httpOnly cookie automatically."
+					},
+					"response": []
+				}
+			],
+			"description": "Test endpoints demonstrating role-based access control"
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
