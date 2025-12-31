@@ -2,7 +2,14 @@
 
 A full-stack web application for managing employee information and leave requests with JWT-based authentication and role-based access control.
 
-## 🚀 Quick Setup
+## Tech Stack
+
+- **Backend**: Spring Boot 4.0.1, Java 21, Spring Security, PostgreSQL
+- **Frontend**: React 19, Vite, Axios, React Router
+- **Authentication**: JWT (Access + Refresh Tokens)
+- **Deployment**: Docker, Nginx
+
+## Setup & Run Instructions
 
 ### Using Docker (Recommended)
 ```bash
@@ -28,13 +35,11 @@ npm run dev
 ```
 Access at: http://localhost:5173 (dev server)
 
-## 🏗️ Architecture
+### Default Admin Credentials
+- **Username**: admin
+- **Password**: admin123
 
-### Technology Stack
-- **Backend**: Spring Boot 4.0.1, Java 21, Spring Security, PostgreSQL → [Backend README](backend/README.md)
-- **Frontend**: React 19, Vite, Axios, React Router → [Frontend README](frontend/README.md)
-- **Authentication**: JWT (Access + Refresh Tokens)
-- **Deployment**: Docker, Nginx
+## Architecture
 
 ### Project Structure
 ```
@@ -63,10 +68,10 @@ Access at: http://localhost:5173 (dev server)
 └── docker-compose.yml     # Multi-container orchestration
 ```
 
-## � How It Works
+## How It Works
 
 ### Authentication Flow
-1. **User Login**: Credentials sent to `/api/auth/login`
+1. **User Login**: Credentials sent to backend authentication endpoint
 2. **Token Generation**: Backend validates credentials and issues JWT access token (15 min) and refresh token (7 days)
 3. **Token Storage**: Tokens stored in HTTP-only cookies for security
 4. **Authenticated Requests**: Access token sent with each API request via Authorization header
@@ -87,97 +92,17 @@ Access at: http://localhost:5173 (dev server)
 - **API Level**: Spring Security annotations (`@PreAuthorize`) restrict endpoint access
 - **Frontend**: UI components conditionally render based on user role
 
-## �📋 Features
-
-### Core Functionality
-- **Employee Management**: CRUD operations for employee records
-- **Leave Management**: Submit, approve/reject leave requests
-- **Dashboard**: Overview statistics and pending actions
-- **Role-Based Access**: USER and ADMIN roles with different permissions
-
-### Security Features
-- JWT-based stateless authentication
-- Automatic token refresh mechanism
-- BCrypt password encryption
-- Protected routes and API endpoints
-- CORS configuration for cross-origin requests
-
 ### User Roles
 - **ADMIN**: Full access to all employees and leave requests
 - **USER**: Access to own employee profile and leave requests
 
-## 🔑 Default Credentials
+## API Testing
 
-Admin user is automatically created on first run:
-- **Username**: admin
-- **Password**: admin123
+For comprehensive API testing, import the Postman collection: [JWT_Authentication_API.postman_collection.json](backend/JWT_Authentication_API.postman_collection.json)
 
-## 🧪 API Testing with Postman
+The collection includes pre-configured requests for authentication, employee management, and leave management with automatic token handling.
 
-Import the Postman collection for easy API testing:
-- **Collection File**: `backend/JWT_Authentication_API.postman_collection.json`
-- **Import**: Open Postman → Import → Select the JSON file
-- **Features**: Pre-configured requests with descriptions, authentication endpoints, employee/leave CRUD operations
-- **Authentication**: Tokens are managed via httpOnly cookies automatically (no manual header setup needed)
+## Additional Documentation
 
-## 📡 API Endpoints
-
-### Authentication
-- `POST /api/auth/register` - User registration
-- `POST /api/auth/login` - User login
-- `POST /api/auth/refresh` - Refresh access token
-- `POST /api/auth/logout` - User logout
-
-### Employees
-- `GET /api/employees` - List all employees
-- `GET /api/employees/{id}` - Get employee details
-- `POST /api/employees` - Create employee
-- `PUT /api/employees/{id}` - Update employee
-- `DELETE /api/employees/{id}` - Delete employee
-
-### Leaves
-- `GET /api/leaves` - List leaves (filtered by user role)
-- `GET /api/leaves/{id}` - Get leave details
-- `POST /api/leaves` - Submit leave request
-- `PUT /api/leaves/{id}` - Update leave request
-- `PATCH /api/leaves/{id}/status` - Approve/reject leave
-
-## 🛠️ Configuration
-
-### Backend Configuration
-Key settings in `backend/src/main/resources/application.yml`:
-- Server port: 8080
-- JWT secret and expiration times
-- CORS allowed origins
-
-### Frontend Configuration
-API base URL in `frontend/src/services/api.js`:
-```javascript
-baseURL: 'http://localhost:8080/api'
-```
-
-## 📦 Dependencies
-
-### Backend
-- Spring Boot Starter Web
-- Spring Boot Starter Security
-- Spring Boot Starter Data JPA
-- PostgreSQL Driver
-- jjwt (JWT implementation)
-- Lombok
-
-### Frontend
-- React & React Router DOM
-- Axios
-- Vite
-- date-fns
-
-## 📝 Additional Documentation
-
-### Module-Specific Documentation
-- **Backend**: [backend/README.md](backend/README.md) - API setup and configuration
-- **Frontend**: [frontend/README.md](frontend/README.md) - UI components and development
-
-### Detailed Guides
-- Backend: `backend/extra_files/` - Implementation guides and API docs
-- Frontend: `frontend/extra_files/` - Component documentation and testing guides
+- **Backend Details**: [backend/README.md](backend/README.md)
+- **Frontend Details**: [frontend/README.md](frontend/README.md)
