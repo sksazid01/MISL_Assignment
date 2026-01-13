@@ -41,6 +41,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 // Public endpoints
                 .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/health").permitAll()
                 .requestMatchers("/actuator/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/public/**").permitAll()
 
@@ -81,7 +82,7 @@ public class SecurityConfig {
             "http://localhost:3000", 
             "http://localhost:4200", 
             "http://localhost:5173",
-            "https://employee-management-system-xfnv.onrender.com"
+            "https://misl-assignment.vercel.app"
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*")); // Allow all headers
