@@ -7,7 +7,7 @@ import '../styles/Employee.css';
 const EmployeeForm = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const isEditMode = Boolean(id);
+  const isEditMode = Boolean(id); // type casting
 
   const [formData, setFormData] = useState({
     userId: '',
@@ -194,7 +194,7 @@ const EmployeeForm = () => {
               Cancel
             </button>
             <button type="submit" className="btn btn-primary" disabled={loading}>
-              {loading ? 'Saving...' : isEditMode ? 'Update Employee' : 'Create Employee'}
+              {loading ? 'Saving...' : (isEditMode ? 'Update Employee' : 'Create Employee')}
             </button>
           </div>
         </form>

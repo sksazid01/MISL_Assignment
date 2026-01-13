@@ -16,10 +16,12 @@ const ProtectedRoute = ({ children, adminOnly = false }) => {
     return <Navigate to="/login" replace />;
   }
 
+  // route requeired admin, but the user is not admin
   if (adminOnly && user.role !== 'ADMIN') {
     return <Navigate to="/" replace />;
   }
 
+  // Allow access
   return children;
 };
 

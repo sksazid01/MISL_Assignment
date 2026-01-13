@@ -69,7 +69,7 @@ const EmployeeList = () => {
       <div className="page-header">
         <h2>Employees</h2>
         {isAdmin() && (
-          <Link to="/employees/new" className="btn btn-primary">
+          <Link to="/employees/new" className="btn-primary">
             Add Employee
           </Link>
         )}

@@ -88,17 +88,6 @@
   text-decoration: underline;
 }
 
-/* Responsive Design */
-@media (max-width: 640px) {
-  .stat-card {
-    padding: 20px;
-  }
-
-  .stat-value {
-    font-size: 32px;
-  }
-}
-
 .quick-actions {
   background: white;
   border-radius: 12px;

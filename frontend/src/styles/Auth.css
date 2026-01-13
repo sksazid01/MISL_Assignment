@@ -1,4 +1,6 @@
 /* Auth Pages Styles */
+
+
 .auth-container {
   display: flex;
   justify-content: center;
@@ -93,6 +95,13 @@
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s;
+}
+
+.btn-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 }
 
 .btn-primary {

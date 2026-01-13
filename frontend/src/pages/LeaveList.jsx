@@ -10,7 +10,7 @@ const LeaveList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
-  const { user, isAdmin } = useAuth();
+  const { employee, isAdmin } = useAuth();
 
   useEffect(() => {
     fetchLeaves();
@@ -129,7 +129,8 @@ const LeaveList = () => {
                     <Link to={`/leaves/${leave.id}`} className="btn btn-sm btn-info">
                       View
                     </Link>
-                    {leave.status === 'PENDING' && (
+                    {/* the employeeId is the id from path */}
+                    {(isAdmin() || employee?.id === leave.employeeId) && leave.status === 'PENDING' && (
                       <>
                         <Link to={`/leaves/edit/${leave.id}`} className="btn btn-sm btn-warning">
                           Edit

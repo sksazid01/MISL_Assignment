@@ -10,12 +10,13 @@ const Login = () => {
     username: '',
     password: '',
   });
+
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
-      ...formData,
+      ...formData,  // previous value of formData, then update the value below
       [e.target.name]: e.target.value,
     });
   };
@@ -84,9 +85,11 @@ const Login = () => {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary" disabled={loading}>
-            {loading ? 'Logging in...' : 'Login'}
-          </button>
+          <div className="btn-center">
+            <button type="submit" className="btn btn-primary" disabled={loading}>
+              {loading ? 'Logging in...' : 'Login'}
+            </button>
+          </div>
         </form>
 
         <p className="auth-link">

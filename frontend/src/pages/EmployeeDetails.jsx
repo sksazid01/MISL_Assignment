@@ -21,7 +21,8 @@ const EmployeeDetails = () => {
   const fetchEmployeeData = async () => {
     setLoading(true);
     try {
-      const [employeeData, leavesData, statsData] = await Promise.all([
+      // All API calls run in parallel and Faster than sequential calls
+      const [employeeData, leavesData, statsData] = await Promise.all([  
         employeeService.getEmployeeById(id),
         leaveService.getLeavesByEmployee(id),
         leaveService.getEmployeeLeaveStats(id),
@@ -136,9 +137,12 @@ const EmployeeDetails = () => {
         
         {leaves.length > 0 ? (
           <div className="leaves-table">
+            
             <table>
               <thead>
+                {/* One row */}
                 <tr>
+                  {/* 6 column or row heading */}
                   <th>Type</th>
                   <th>Start Date</th>
                   <th>End Date</th>
@@ -168,6 +172,7 @@ const EmployeeDetails = () => {
                 ))}
               </tbody>
             </table>
+
           </div>
         ) : (
           <div className="empty-state">

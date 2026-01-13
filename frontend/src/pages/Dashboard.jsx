@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import dashboardService from '../services/dashboardService';
 import { useAuth } from '../context/AuthContext';
-import { formatDate } from '../utils/dateUtils';
 import '../styles/Dashboard.css';
 
 const Dashboard = () => {
@@ -41,32 +40,22 @@ const Dashboard = () => {
     }
   };
 
-  const getStatusColor = (status) => {
-    switch (status) {
-      case 'APPROVED':
-        return 'success';
-      case 'REJECTED':
-        return 'danger';
-      case 'PENDING':
-        return 'warning';
-      default:
-        return '';
-    }
-  };
-
   if (loading) return <div className="loading">Loading dashboard...</div>;
 
   return (
     <div className="dashboard-container">
       <div className="dashboard-inner">
+        
         <div className="dashboard-header">
           <h1>Welcome, {user?.username}!</h1>
           <p>Here's an overview of the Employee Leave Management System</p>
+
           {!isAdmin() && !employee && (
             <div style={{ marginTop: '16px', padding: '12px', backgroundColor: '#fff3cd', color: '#856404', borderRadius: '8px', border: '1px solid #ffeaa7' }}>
               ⚠️ You don't have an employee record yet. Contact your administrator to create one so you can apply for leave.
             </div>
           )}
+
           {!isAdmin() && employee && (
             <div style={{ marginTop: '16px', padding: '12px', backgroundColor: '#d4edda', color: '#155724', borderRadius: '8px', border: '1px solid #c3e6cb' }}>
               ✓ Employee Status: <strong>{employee.username}</strong> - {employee.department}
@@ -75,6 +64,7 @@ const Dashboard = () => {
         </div>
 
         <div className="stats-grid">
+          
           <div className="stat-card">
             <div className="stat-icon">👥</div>
             <div className="stat-content">
@@ -102,12 +92,15 @@ const Dashboard = () => {
             <div className="stat-content">
               <h3>Total Leaves</h3>
               <p className="stat-value">{stats.totalLeaves}</p>
-              <Link to="/leaves" className="stat-link">
+              
+              {employee && <Link to="/leaves" className="stat-link">
                 View all →
-              </Link>
+              </Link>}
             </div>
           </div>
+        </div>
 
+        <div className="stats-grid">
           <div className="stat-card">
             <div className="stat-icon">⏳</div>
             <div className="stat-content">

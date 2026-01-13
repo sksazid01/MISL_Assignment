@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     // Check if user is logged in on mount
     checkAuth();
-  }, []);
+  }, []); 
 
   const checkAuth = async () => {
     try {
@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }) => {
     return response;
   };
 
-  const logout = async () => {
+  const logout = async () => { 
     await authService.logout();
     setUser(null);
     setEmployee(null);
@@ -60,6 +60,7 @@ export const AuthProvider = ({ children }) => {
     return user?.role === 'ADMIN';
   };
 
+  // pass those function value to children
   const value = {
     user,
     employee,
@@ -71,7 +72,9 @@ export const AuthProvider = ({ children }) => {
     checkAuth,
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={value}>
+    {children}
+    </AuthContext.Provider>;
 };
 
 export const useAuth = () => {

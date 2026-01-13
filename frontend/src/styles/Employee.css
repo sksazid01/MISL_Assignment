@@ -124,6 +124,11 @@
   margin-top: 16px;
   flex-wrap: wrap;
 }
+.btn-primary{
+  width: auto;
+  min-width: fit-content;
+  padding: 10px 20px;
+}
 
 .btn-secondary {
   background-color: #6c757d;

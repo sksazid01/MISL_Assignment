@@ -40,8 +40,10 @@ function App() {
                 <Layout />
               </ProtectedRoute>
             }
-          >
-            <Route index element={<Dashboard />} />
+          > {/* end of root router */}
+          
+            {/* default child, that Loads dashboard inside layout here index means <Layout/> elements of "/" path */}
+            <Route index element={<Dashboard />} />   
             
             {/* Employee Routes */}
             <Route path="employees" element={<EmployeeList />} />

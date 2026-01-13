@@ -21,6 +21,7 @@ const Register = () => {
       ...formData,
       [e.target.name]: e.target.value,
     });
+    
     // Clear field error when user starts typing
     if (fieldErrors[e.target.name]) {
       setFieldErrors(prev => {
@@ -155,9 +156,11 @@ const Register = () => {
             />
           </div>
 
+          <div className="btn-center">
           <button type="submit" className="btn btn-primary" disabled={loading}>
             {loading ? 'Registering...' : 'Register'}
           </button>
+          </div>
         </form>
 
         <p className="auth-link">

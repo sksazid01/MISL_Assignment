@@ -37,17 +37,20 @@ const Navbar = () => {
 
         <div className="navbar-menu">
           <Link
+          // redirect to '/' path, when anyone clicked on 'Dashboard'
             to="/"
             className={`nav-link ${isActive('/') && location.pathname === '/' ? 'active' : ''}`}
           >
             Dashboard
           </Link>
+          
           <Link
             to="/employees"
             className={`nav-link ${isActive('/employees') ? 'active' : ''}`}
           >
             Employees
           </Link>
+
           {(isAdmin() || employee) && (
             <Link
               to="/leaves"
@@ -56,6 +59,8 @@ const Navbar = () => {
               Leaves
             </Link>
           )}
+
+          {/* only admin can see this */}
           {isAdmin() && (
             <Link
               to="/leaves/pending"
