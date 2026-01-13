@@ -1,7 +1,10 @@
 import axios from 'axios';
 
+// Use environment variable for backend URL, fallback to localhost for development
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
+
 const api = axios.create({
-  baseURL: 'http://localhost:8080/api',
+  baseURL: API_BASE_URL,
   withCredentials: true, // Important for httpOnly cookies
   headers: {
     'Content-Type': 'application/json',
@@ -20,7 +23,7 @@ api.interceptors.response.use(
 
       try {
         // Try to refresh the token
-        await axios.post('http://localhost:8080/api/auth/refresh', {}, {
+        await axios.post(`${API_BASE_URL}/auth/refresh`, {}, {
           withCredentials: true
         });
         
