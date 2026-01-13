@@ -35,9 +35,10 @@ npm run dev
 ```
 Access at: http://localhost:5173 (dev server)
 
-### Default Admin Credentials
-- **Username**: admin
-- **Password**: admin123
+### Default Credentials
+- **Admin**: Username: **admin** | Password: **admin123**
+- **User**: Username: **skk** | Password: **skk@gmail.com**
+- **Employee user**: Username: **mehedi** | Password: **mehedi@gmail.com**
 
 ## Architecture
 
