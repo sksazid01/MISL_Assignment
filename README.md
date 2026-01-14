@@ -9,6 +9,19 @@ A full-stack web application for managing employee information and leave request
 - **Authentication**: JWT (Access + Refresh Tokens)
 - **Deployment**: Docker, Nginx
 
+## Features
+
+- **User Registration**: Anyone can register as a user account
+- **User Access**: Users can view the dashboard and employee list (read-only)
+- **Admin Management**: Admins can promote users to employees and manage employee information
+- **Employee Leave System**: 
+  - Employees can submit leave applications
+  - Employees can edit their own pending leave requests
+- **Admin Controls**: 
+  - Full access to edit employee details
+  - Review and manage (approve/reject) pending leave applications
+- **Role-Based Security**: Automatic authorization based on user roles (Admin, User, Employee)
+
 ## Setup & Run Instructions
 
 ### Using Docker (Recommended)
