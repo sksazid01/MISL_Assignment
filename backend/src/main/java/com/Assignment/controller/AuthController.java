@@ -37,10 +37,10 @@ public class AuthController {
     private void addCookie(HttpServletResponse response, String name, String value, int maxAge) {
         ResponseCookie cookie = ResponseCookie.from(name, value)
                 .httpOnly(true)
-                .secure(false) // Set to true in production with HTTPS
+                .secure(true) // Required for cross-site cookies with SameSite=None
                 .path("/")
                 .maxAge(maxAge)
-                .sameSite("Lax")
+                .sameSite("None") // Allow cross-site requests (Vercel -> Render)
                 .build();
         response.addHeader("Set-Cookie", cookie.toString());
     }
