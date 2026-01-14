@@ -41,7 +41,21 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (credentials) => {
     const response = await authService.login(credentials);
-    await checkAuth(); // Refresh user data
+    // Login response already contains user data, set it directly
+    setUser(response);
+    
+    // Fetch employee data if user is logged in
+    try {
+      const employeeData = await employeeService.getMyEmployee();
+      if (employeeData.id) {
+        setEmployee(employeeData);
+      } else {
+        setEmployee(null);
+      }
+    } catch (err) {
+      setEmployee(null);
+    }
+    
     return response;
   };
 
