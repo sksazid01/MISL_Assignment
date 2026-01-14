@@ -95,12 +95,14 @@ public class AuthController {
             User user = userRepository.findByUsername(userDetails.getUsername())
                     .orElseThrow(() -> new RuntimeException("User not found"));
 
-            // Return user info without tokens (tokens are in cookies)
+            // Return user info WITH tokens (for localStorage fallback on cross-domain)
             AuthResponse authResponse = AuthResponse.builder()
                     .id(user.getId())
                     .username(user.getUsername())
                     .email(user.getEmail())
                     .role(user.getRole().name())
+                    .accessToken(accessToken)  // Add tokens to response
+                    .refreshToken(refreshToken)
                     .build();
 
             return ResponseEntity.ok(authResponse);
