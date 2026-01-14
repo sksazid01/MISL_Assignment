@@ -47,8 +47,8 @@ public class SecurityConfig {
 
 
                 // Employee and Leave endpoints - require authentication
-                .requestMatchers("/api/employees/**").hasAnyRole("ADMIN", "USER")
-                .requestMatchers("/api/leaves/**").hasAnyRole("ADMIN", "USER")
+                .requestMatchers("/api/employees/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
+                .requestMatchers("/api/leaves/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
 
 
                 // All other endpoints require authentication
