@@ -95,7 +95,7 @@ const LeaveDetails = () => {
 
       <div className="details-card">
         <div className="detail-header">
-          <h3>Leave #{leave.id}</h3>
+          <h3>Leave ID: {leave.id}</h3>
           <span className={`status-badge ${getStatusColor(leave.status)}`}>
             {leave.status}
           </span>

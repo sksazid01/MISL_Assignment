@@ -7,11 +7,11 @@ import '../styles/Leave.css';
 
 const LeaveForm = () => {
   const navigate = useNavigate();
+  const { employee: currentEmployee, isAdmin } = useAuth();
+
   const { id } = useParams();
   const location = useLocation();
-  const { employee: currentEmployee, isAdmin } = useAuth();
   const isEditMode = Boolean(id);
-
   const queryParams = new URLSearchParams(location.search);
   const preselectedEmployeeId = queryParams.get('employeeId');
 
@@ -29,7 +29,12 @@ const LeaveForm = () => {
   useEffect(() => {
     // Auto-select current employee if user is not admin and has employee record
     if (!isAdmin() && currentEmployee && !isEditMode) {
-      setFormData(prev => ({ ...prev, employeeId: currentEmployee.id }));
+      setFormData(prev => (
+        { 
+          ...prev, 
+          employeeId: currentEmployee.id 
+        }
+      ));
     }
     
     // Only fetch all employees if admin
@@ -219,7 +224,7 @@ const LeaveForm = () => {
               onClick={() => navigate('/leaves')}
               className="btn btn-secondary"
             >
-              Cancel
+              Canceltruthy
             </button>
             <button 
               type="submit" 
