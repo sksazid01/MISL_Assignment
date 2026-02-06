@@ -4,6 +4,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/Layout';
 
 // Auth Pages
+import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Register from './pages/Register';
 
@@ -29,6 +30,7 @@ function App() {
       <AuthProvider>
         <Routes>
           {/* Public Routes */}
+          <Route path="/landing" element={<Landing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
@@ -71,8 +73,8 @@ function App() {
             } />
           </Route>
 
-          {/* Catch all */}
-          <Route path="*" element={<Navigate to="/" replace />} />
+          {/* Catch all - Redirect to landing for logged out users */}
+          <Route path="*" element={<Navigate to="/landing" replace />} />
         </Routes>
       </AuthProvider>
     </Router>

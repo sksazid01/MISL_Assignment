@@ -13,7 +13,7 @@ const ProtectedRoute = ({ children, adminOnly = false }) => {
   }
 
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/landing" replace />;
   }
 
   // route requeired admin, but the user is not admin

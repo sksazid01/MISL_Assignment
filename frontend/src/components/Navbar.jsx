@@ -10,10 +10,10 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       await logout();
-      navigate('/login');
+      navigate('/landing');
     } catch (err) {
-      // Logout failed, but still redirect to login page
-      navigate('/login');
+      // Logout failed, but still redirect to landing page
+      navigate('/landing');
     }
   };
 
