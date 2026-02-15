@@ -95,7 +95,7 @@ const PendingLeaves = () => {
               </div>
 
               <div className="card-actions">
-                <Link to={`/leaves/${leave.id}`} className="btn btn-info">
+                <Link to={`/dashboard/leaves/${leave.id}`} className="btn btn-info">
                   View Details
                 </Link>
                 <button
@@ -117,7 +117,7 @@ const PendingLeaves = () => {
       ) : (
         <div className="empty-state">
           <p>No pending leave applications</p>
-          <Link to="/leaves" className="btn btn-primary">
+          <Link to="/dashboard/leaves" className="btn btn-primary">
             View All Leaves
           </Link>
         </div>

@@ -62,7 +62,7 @@ const LeaveList = () => {
     <div className="leave-list-container">
       <div className="page-header">
         <h2>Leave Applications</h2>
-        <Link to="/leaves/new" className="btn btn-primary btn-apply-leave">
+        <Link to="/dashboard/leaves/new" className="btn btn-primary btn-apply-leave">
           Apply for Leave
         </Link>
       </div>
@@ -126,7 +126,7 @@ const LeaveList = () => {
                 <td>{new Date(leave.appliedDate).toLocaleDateString()}</td>
                 <td>
                   <div className="action-buttons">
-                    <Link to={`/leaves/${leave.id}`} className="btn btn-sm btn-info">
+                    <Link to={`/dashboard/leaves/${leave.id}`} className="btn btn-sm btn-info">
                       View
                     </Link>
                     {/* the employeeId is the id from path */}

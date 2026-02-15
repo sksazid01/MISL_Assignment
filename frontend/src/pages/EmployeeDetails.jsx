@@ -49,7 +49,7 @@ const EmployeeDetails = () => {
           <Link to={`/employees/edit/${id}`} className="btn btn-primary">
             Edit Employee
           </Link>
-          <button onClick={() => navigate('/employees')} className="btn btn-secondary">
+          <button onClick={() => navigate('/dashboard/employees')} className="btn btn-secondary">
             Back to List
           </button>
         </div>
@@ -164,7 +164,7 @@ const EmployeeDetails = () => {
                       </span>
                     </td>
                     <td>
-                      <Link to={`/leaves/${leave.id}`} className="btn btn-sm">
+                      <Link to={`/dashboard/leaves/${leave.id}`} className="btn btn-sm">
                         View
                       </Link>
                     </td>

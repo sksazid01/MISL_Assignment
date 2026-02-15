@@ -10,10 +10,10 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       await logout();
-      navigate('/landing');
+      navigate('/');
     } catch (err) {
       // Logout failed, but still redirect to landing page
-      navigate('/landing');
+      navigate('/');
     }
   };
 
@@ -30,31 +30,31 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <Link to="/" className="navbar-brand">
+        <Link to="/dashboard" className="navbar-brand">
           <span className="brand-icon">🏢</span>
           Employee Leave Tracker
         </Link>
 
         <div className="navbar-menu">
           <Link
-          // redirect to '/' path, when anyone clicked on 'Dashboard'
-            to="/"
-            className={`nav-link ${isActive('/') && location.pathname === '/' ? 'active' : ''}`}
+          // redirect to '/dashboard' path, when anyone clicked on 'Dashboard'
+            to="/dashboard"
+            className={`nav-link ${isActive('/dashboard') && (location.pathname === '/dashboard' || location.pathname === '/') ? 'active' : ''}`}
           >
             Dashboard
           </Link>
           
           <Link
-            to="/employees"
-            className={`nav-link ${isActive('/employees') ? 'active' : ''}`}
+            to="/dashboard/employees"
+            className={`nav-link ${isActive('/dashboard/employees') ? 'active' : ''}`}
           >
             Employees
           </Link>
 
           {(isAdmin() || employee) && (
             <Link
-              to="/leaves"
-              className={`nav-link ${isActive('/leaves') ? 'active' : ''}`}
+              to="/dashboard/leaves"
+              className={`nav-link ${isActive('/dashboard/leaves') ? 'active' : ''}`}
             >
               Leaves
             </Link>
@@ -63,8 +63,8 @@ const Navbar = () => {
           {/* only admin can see this */}
           {isAdmin() && (
             <Link
-              to="/leaves/pending"
-              className={`nav-link ${isActive('/leaves/pending') ? 'active' : ''}`}
+              to="/dashboard/leaves/pending"
+              className={`nav-link ${isActive('/dashboard/leaves/pending') ? 'active' : ''}`}
             >
               Pending Approvals
             </Link>

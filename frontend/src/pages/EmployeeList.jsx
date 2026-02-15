@@ -69,7 +69,7 @@ const EmployeeList = () => {
       <div className="page-header">
         <h2>Employees</h2>
         {isAdmin() && (
-          <Link to="/employees/new" className="btn-primary">
+          <Link to="/dashboard/employees/new" className="btn-primary">
             Add Employee
           </Link>
         )}
@@ -123,7 +123,7 @@ const EmployeeList = () => {
               <p><strong>Join Date:</strong> {formatDate(employee.joinDate)}</p>
             </div>
             <div className="employee-actions">
-              <Link to={`/employees/${employee.id}`} className="btn btn-secondary">
+              <Link to={`/dashboard/employees/${employee.id}`} className="btn btn-secondary">
                 View Details
               </Link>
               {isAdmin() && (

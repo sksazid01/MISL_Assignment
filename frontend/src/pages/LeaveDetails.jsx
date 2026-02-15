@@ -88,7 +88,7 @@ const LeaveDetails = () => {
     <div className="leave-details-container">
       <div className="page-header">
         <h2>Leave Application Details</h2>
-        <button onClick={() => navigate('/leaves')} className="btn btn-secondary">
+        <button onClick={() => navigate('/dashboard/leaves')} className="btn btn-secondary">
           Back to List
         </button>
       </div>

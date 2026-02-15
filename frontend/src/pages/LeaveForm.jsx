@@ -89,7 +89,7 @@ const LeaveForm = () => {
       } else {
         await leaveService.applyForLeave(formData);
       }
-      navigate('/leaves');
+      navigate('/dashboard/leaves');
     } catch (err) {
       // Handle different error response formats
       let errorMessage = 'Failed to save leave application';
@@ -221,7 +221,7 @@ const LeaveForm = () => {
           <div className="form-actions">
             <button
               type="button"
-              onClick={() => navigate('/leaves')}
+              onClick={() => navigate('/dashboard/leaves')}
               className="btn btn-secondary"
             >
               Canceltruthy

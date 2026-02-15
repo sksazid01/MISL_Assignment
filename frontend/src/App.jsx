@@ -30,21 +30,20 @@ function App() {
       <AuthProvider>
         <Routes>
           {/* Public Routes */}
-          <Route path="/landing" element={<Landing />} />
+          <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
           {/* Protected Routes */}
           <Route
-            path="/"
+            path="/dashboard"
             element={
               <ProtectedRoute>
                 <Layout />
               </ProtectedRoute>
             }
-          > {/* end of root router */}
-          
-            {/* default child, that Loads dashboard inside layout here index means <Layout/> elements of "/" path */}
+          >
+            {/* default child, that Loads dashboard inside layout */}
             <Route index element={<Dashboard />} />   
             
             {/* Employee Routes */}
@@ -73,8 +72,8 @@ function App() {
             } />
           </Route>
 
-          {/* Catch all - Redirect to landing for logged out users */}
-          <Route path="*" element={<Navigate to="/landing" replace />} />
+          {/* Catch all - Redirect to root */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AuthProvider>
     </Router>

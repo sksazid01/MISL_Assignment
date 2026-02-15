@@ -28,7 +28,7 @@ const Login = () => {
 
     try {
       await login(formData);
-      navigate('/');
+      navigate('/dashboard');
     } catch (err) {
       // Handle different error response formats
       let errorMessage = 'Login failed. Please check your credentials.';
@@ -55,6 +55,7 @@ const Login = () => {
   return (
     <div className="auth-container">
       <div className="auth-card">
+        <Link to="/" style={{ marginBottom: '20px', display: 'inline-block', textDecoration: 'none', color: '#007bff', fontSize: '14px' }}>← Back to Home</Link>
         <h2>Employee Leave Tracker</h2>
         <h3>Login</h3>
         

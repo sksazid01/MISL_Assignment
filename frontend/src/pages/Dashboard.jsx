@@ -70,7 +70,7 @@ const Dashboard = () => {
             <div className="stat-content">
               <h3>Total Employees</h3>
               <p className="stat-value">{stats.totalEmployees}</p>
-              <Link to="/employees" className="stat-link">
+              <Link to="/dashboard/employees" className="stat-link">
                 View all →
               </Link>
             </div>
@@ -81,7 +81,7 @@ const Dashboard = () => {
             <div className="stat-content">
               <h3>Active Employees</h3>
               <p className="stat-value">{stats.activeEmployees}</p>
-              <Link to="/employees" className="stat-link">
+              <Link to="/dashboard/employees" className="stat-link">
                 View all →
               </Link>
             </div>
@@ -93,7 +93,7 @@ const Dashboard = () => {
               <h3>Total Leaves</h3>
               <p className="stat-value">{stats.totalLeaves}</p>
               
-              {employee && <Link to="/leaves" className="stat-link">
+              {employee && <Link to="/dashboard/leaves" className="stat-link">
                 View all →
               </Link>}
             </div>
@@ -107,7 +107,7 @@ const Dashboard = () => {
               <h3>Pending Leaves</h3>
               <p className="stat-value">{stats.pendingLeaves}</p>
               {isAdmin() && (
-                <Link to="/leaves/pending" className="stat-link">
+                <Link to="/dashboard/leaves/pending" className="stat-link">
                   Review →
                 </Link>
               )}

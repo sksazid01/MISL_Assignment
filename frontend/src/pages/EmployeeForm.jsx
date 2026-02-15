@@ -69,7 +69,7 @@ const EmployeeForm = () => {
       } else {
         await employeeService.createEmployee(formData);
       }
-      navigate('/employees');
+      navigate('/dashboard/employees');
     } catch (err) {
       // Handle different error response formats
       let errorMessage = 'Failed to save employee';
@@ -188,7 +188,7 @@ const EmployeeForm = () => {
           <div className="form-actions">
             <button
               type="button"
-              onClick={() => navigate('/employees')}
+              onClick={() => navigate('/dashboard/employees')}
               className="btn btn-secondary"
             >
               Cancel

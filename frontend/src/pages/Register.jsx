@@ -95,6 +95,7 @@ const Register = () => {
   return (
     <div className="auth-container">
       <div className="auth-card">
+        <Link to="/" style={{ marginBottom: '20px', display: 'inline-block', textDecoration: 'none', color: '#007bff', fontSize: '14px' }}>← Back to Home</Link>
         <h2>Employee Leave Tracker</h2>
         <h3>Register</h3>
         
