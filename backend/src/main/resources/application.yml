@@ -4,10 +4,10 @@ spring:
 
   # PostgreSQL Database Configuration
   datasource:
-    url: jdbc:postgresql://sksazid-sksazid.i.aivencloud.com:20700/defaultdb?sslmode=require
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/defaultdb}
     driver-class-name: org.postgresql.Driver
-    username: avnadmin
-    password: AVNS_T2d6b90dS052GAilGq-
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:password}
     hikari:
       maximum-pool-size: 2
       minimum-idle: 1
@@ -31,9 +31,9 @@ spring:
 
 # JWT Configuration
 jwt:
-  secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
-  expiration: 86400000           # 24 hours in milliseconds
-  refresh-expiration: 604800000  # 7 days in milliseconds
+  secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+  expiration: ${JWT_EXPIRATION:86400000}           # 24 hours in milliseconds
+  refresh-expiration: ${JWT_REFRESH_EXPIRATION:604800000}  # 7 days in milliseconds
 
 # Logging
 logging:

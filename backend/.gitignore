@@ -46,3 +46,8 @@ Thumbs.db
 
 ### Extra ###
 extra_files/
+
+### Environment Variables ###
+.env
+.env.local
+.env.*.local
