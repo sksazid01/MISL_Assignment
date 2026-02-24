@@ -86,7 +86,7 @@ Access at: http://localhost:5173 (dev server)
 
 ### Authentication Flow
 1. **User Login**: Credentials sent to backend authentication endpoint
-2. **Token Generation**: Backend validates credentials and issues JWT access token (15 min) and refresh token (7 days)
+2. **Token Generation**: Backend validates credentials and issues JWT access token (24 hours) and refresh token (7 days)
 3. **Token Storage**: Tokens stored in HTTP-only cookies for security
 4. **Authenticated Requests**: Access token sent with each API request via Authorization header
 5. **Token Refresh**: When access token expires, refresh token automatically requests new access token
