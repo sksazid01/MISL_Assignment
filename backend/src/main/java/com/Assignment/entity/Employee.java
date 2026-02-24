@@ -42,7 +42,7 @@ public class Employee {
     private LocalDate joinDate;
 
     @Column(name = "is_active")
-    @Builder.Default
+    @Builder.Default // keeps defauls value
     private Boolean isActive = true;
 
     @CreationTimestamp

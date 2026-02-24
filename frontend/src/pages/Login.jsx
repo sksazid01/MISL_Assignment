@@ -32,15 +32,18 @@ const Login = () => {
     } catch (err) {
       // Handle different error response formats
       let errorMessage = 'Login failed. Please check your credentials.';
-      
+
       if (err.response?.data) {
-        if (typeof err.response.data === 'string') {
-          errorMessage = err.response.data;
-        } else if (err.response.data.message) {
-          // Remove "Error: " prefix if present for cleaner display
-          errorMessage = err.response.data.message.replace(/^Error:\s*/, '');
-        } else if (err.response.data.error) {
-          errorMessage = err.response.data.error.replace(/^Error:\s*/, '');
+        const data = err.response.data;
+        if (typeof data === 'string') {
+          errorMessage = data;
+        } else if (data.message) {
+          errorMessage = data.message.replace(/^Error:\s*/, '');
+        } else if (data.error) {
+          errorMessage = data.error.replace(/^Error:\s*/, '');
+        } else if (typeof data === 'object') {
+          // Field validation errors: { username: "...", password: "..." }
+          errorMessage = Object.values(data).join(' ');
         }
       } else if (err.message) {
         errorMessage = err.message;
