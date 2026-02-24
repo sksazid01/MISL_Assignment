@@ -40,10 +40,7 @@ public interface LeaveRepository extends JpaRepository<Leave, Long> {
     //     LocalDate endDate
     // );
     
-    List<Leave> findByEmployeeDepartmentAndStatus(
-        String department,
-        LeaveStatus status
-    );
+    List<Leave> findByEmployeeDepartmentAndStatus(String department, LeaveStatus status);
     
     Long countByStatus(LeaveStatus status);
 }
