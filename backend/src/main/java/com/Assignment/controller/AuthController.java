@@ -1,7 +1,6 @@
 package com.Assignment.controller;
 
 import com.Assignment.dto.*;
-import com.Assignment.entity.User;
 import com.Assignment.service.AuthService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -92,8 +91,8 @@ public class AuthController {
                     .body(new MessageResponse("Error: Not authenticated!"));
         }
 
-        User user = authService.getCurrentUser();
-        return ResponseEntity.ok(user);
+        UserResponse userResponse = authService.getCurrentUser();
+        return ResponseEntity.ok(userResponse);
     }
 
     @PostMapping("/logout")

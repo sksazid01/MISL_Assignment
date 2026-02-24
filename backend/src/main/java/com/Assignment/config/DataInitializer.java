@@ -30,9 +30,7 @@ public class DataInitializer implements CommandLineRunner {
                     .build();
 
             userRepository.save(admin);
-            log.info("Default admin account created successfully!");
-            log.info("Username: admin");
-            log.info("Password: admin123");
+            log.info("Default admin account created. Username: admin");
         } else {
             log.info("Admin account already exists");
         }

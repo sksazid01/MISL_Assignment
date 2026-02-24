@@ -12,35 +12,41 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
     private final UserRepository userRepository;
 
+    @Transactional(readOnly = true)
     public List<EmployeeResponse> getAllEmployees() {
         return employeeRepository.findAll().stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public EmployeeResponse getEmployeeById(Long id) {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Employee not found with id: " + id));
         return mapToResponse(employee);
     }
 
+    @Transactional(readOnly = true)
     public List<EmployeeResponse> getEmployeesByDepartment(String department) {
         return employeeRepository.findByDepartment(department).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public List<EmployeeResponse> getActiveEmployees() {
         return employeeRepository.findByIsActive(true).stream()
                 .map(this::mapToResponse)
@@ -112,6 +118,7 @@ public class EmployeeService {
         return new MessageResponse("Employee deleted successfully!");
     }
 
+    @Transactional(readOnly = true)
     public EmployeeResponse getMyEmployee() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();

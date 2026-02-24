@@ -11,11 +11,11 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>com</groupId>
-	<artifactId>Assignment</artifactId>
+	<groupId>com.leavetracker</groupId>
+	<artifactId>leave-tracker</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Assignment</name>
-	<description>Project from Spring Initializr Spring Boot</description>
+	<name>leave-tracker</name>
+	<description>Employee Leave Tracker - Spring Boot REST API</description>
 	<url/>
 	<licenses>
 		<license/>

@@ -1,5 +1,6 @@
 package com.Assignment.service;
 
+import com.Assignment.dto.LeaveStatsResponse;
 import com.Assignment.dto.LeaveRequest;
 import com.Assignment.dto.LeaveResponse;
 import com.Assignment.dto.LeaveStatusUpdateRequest;
@@ -7,15 +8,16 @@ import com.Assignment.dto.MessageResponse;
 import com.Assignment.entity.Employee;
 import com.Assignment.entity.Leave;
 import com.Assignment.entity.LeaveStatus;
+import com.Assignment.entity.User;
 import com.Assignment.exception.BadRequestException;
 import com.Assignment.repository.EmployeeRepository;
 import com.Assignment.repository.LeaveRepository;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import com.Assignment.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,11 +25,14 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class LeaveService {
 
     private final LeaveRepository leaveRepository;
     private final EmployeeRepository employeeRepository;
+    private final UserRepository userRepository;
 
+    @Transactional(readOnly = true)
     public List<LeaveResponse> getAllLeaves(LeaveStatus status, Long employeeId) {
         List<Leave> leaves;
 
@@ -46,18 +51,21 @@ public class LeaveService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public LeaveResponse getLeaveById(Long id) {
         Leave leave = leaveRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Leave not found with id: " + id));
         return mapToResponse(leave);
     }
 
+    @Transactional(readOnly = true)
     public List<LeaveResponse> getLeavesByEmployee(Long employeeId) {
         return leaveRepository.findByEmployeeId(employeeId).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public List<LeaveResponse> getPendingLeaves() {
         return leaveRepository.findByStatus(LeaveStatus.PENDING).stream()
                 .map(this::mapToResponse)
@@ -116,7 +124,8 @@ public class LeaveService {
         }
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String approver = authentication.getName();
+        User approver = userRepository.findByUsername(authentication.getName())
+                .orElseThrow(() -> new RuntimeException("Approver user not found"));
 
         leave.setStatus(request.getStatus());
         leave.setApprovedBy(approver);
@@ -142,7 +151,8 @@ public class LeaveService {
         return new MessageResponse("Leave deleted successfully!");
     }
 
-    public LeaveStats getEmployeeLeaveStats(Long employeeId) {
+    @Transactional(readOnly = true)
+    public LeaveStatsResponse getEmployeeLeaveStats(Long employeeId) {
         List<Leave> allLeaves = leaveRepository.findByEmployeeId(employeeId);
 
         long totalLeaves = allLeaves.size();
@@ -160,7 +170,7 @@ public class LeaveService {
                 .mapToLong(Leave::getTotalDays)
                 .sum();
 
-        return new LeaveStats(totalLeaves, approvedLeaves, pendingLeaves, rejectedLeaves, totalDaysOnLeave);
+        return new LeaveStatsResponse(totalLeaves, approvedLeaves, pendingLeaves, rejectedLeaves, totalDaysOnLeave);
     }
 
     private LeaveResponse mapToResponse(Leave leave) {
@@ -177,19 +187,9 @@ public class LeaveService {
                 .status(leave.getStatus())
                 .appliedDate(leave.getAppliedDate())
                 .updatedAt(leave.getUpdatedAt())
-                .approvedBy(leave.getApprovedBy())
+                .approvedBy(leave.getApprovedBy() != null ? leave.getApprovedBy().getUsername() : null)
                 .approvalDate(leave.getApprovalDate())
                 .rejectionReason(leave.getRejectionReason())
                 .build();
-    }
-
-    @Data
-    @AllArgsConstructor
-    public static class LeaveStats {
-        private long totalLeaves;
-        private long approvedLeaves;
-        private long pendingLeaves;
-        private long rejectedLeaves;
-        private long totalDaysOnLeave;
     }
 }

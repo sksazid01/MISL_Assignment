@@ -6,6 +6,7 @@ import com.Assignment.repository.EmployeeRepository;
 import com.Assignment.repository.LeaveRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -14,6 +15,7 @@ public class DashboardService {
     private final EmployeeRepository employeeRepository;
     private final LeaveRepository leaveRepository;
 
+    @Transactional(readOnly = true)
     public DashboardStats getDashboardStats() {
         Long totalEmployees = employeeRepository.count();
         Long activeEmployees = employeeRepository.countByIsActive(true);

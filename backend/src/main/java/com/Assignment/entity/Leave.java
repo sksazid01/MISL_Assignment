@@ -4,8 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -14,12 +17,16 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "leaves")
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(exclude = {"employee", "approvedBy"})
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Leave {
 
+    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -55,8 +62,10 @@ public class Leave {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "approved_by")
-    private String approvedBy; // Username of approver
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "approved_by_user_id")
+    @JsonIgnore
+    private User approvedBy;
 
     @Column(name = "approval_date")
     private LocalDateTime approvalDate;
