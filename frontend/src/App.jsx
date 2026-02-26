@@ -30,17 +30,17 @@ function App() {
     <Router>
       <AuthProvider>
         <Routes>
-          {/* Public Routes – redirect to /dashboard if already logged in */}
-          <Route path="/" element={<PublicRoute><Landing /></PublicRoute>} />
-          <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-          <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
+          {/* Public Routes – redirect to /dashboard if already logged in without NavBar */}
+          <Route path="/" element={<PublicRoute>   <Landing />  </PublicRoute>} />
+          <Route path="/login" element={<PublicRoute>   <Login />   </PublicRoute>} />
+          <Route path="/register" element={<PublicRoute>   <Register />   </PublicRoute>} />
 
           {/* Protected Routes */}
           <Route
             path="/dashboard"
             element={
-              <ProtectedRoute>
-                <Layout />
+              <ProtectedRoute> {/* Not needed for login and register */}
+                <Layout /> {/* The NavBar has inside the Layout */}
               </ProtectedRoute>
             }
           >

@@ -224,7 +224,7 @@ const LeaveForm = () => {
               onClick={() => navigate('/dashboard/leaves')}
               className="btn btn-secondary"
             >
-              Canceltruthy
+              Cancel
             </button>
             <button 
               type="submit" 
